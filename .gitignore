@@ -1,7 +1,8 @@
 .vs
-TicketManager.Api/obj
-TicketManaget.Api/bin
-TicketManager.Services/obj
-TicketManaget.Services/bin
-TicketManager.Models/obj
-TicketManaget.Models/bin
+TicketManager.Api/obj/*
+TicketManager.Api/bin/*
+TicketManager.Services/obj/*
+TicketManager.Services/bin/*
+TicketManager.Models/obj/*
+TicketManager.Models/bin/*
+
