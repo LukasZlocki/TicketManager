@@ -5,4 +5,6 @@ TicketManager.Services/obj/*
 TicketManager.Services/bin/*
 TicketManager.Models/obj/*
 TicketManager.Models/bin/*
+TicketManager.Infrastructure/obj/*
+TicketManager.Infrastructure/bin/*
 
