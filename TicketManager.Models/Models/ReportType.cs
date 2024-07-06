@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TicketManager.Models.Models
 {
-    class ReportType
+    public class ReportType
     {
         [Key]
         public int ReportTypeId { get; set; }

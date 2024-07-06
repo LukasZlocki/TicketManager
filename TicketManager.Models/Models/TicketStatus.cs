@@ -2,7 +2,7 @@
 
 namespace TicketManager.Models.Models
 {
-    class TicketStatus
+    public class TicketStatus
     {
         [Key]
         public int TicketStatusId { get; set; }

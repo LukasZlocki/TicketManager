@@ -2,7 +2,7 @@
 
 namespace TicketManager.Models.Models
 {
-    class ReportStructure
+    public class ReportStructure
     {
         [Key]
         public int ReportStructureId { get; set; }

@@ -2,7 +2,7 @@
 
 namespace TicketManager.Models.Models
 {
-    class FactoryLocation
+    public class FactoryLocation
     {
         [Key]
         public int FactoryLocationId { get; set; }

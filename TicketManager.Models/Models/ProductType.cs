@@ -2,7 +2,7 @@
 
 namespace TicketManager.Models.Models
 {
-    class ProductType
+    public class ProductType
     {
         [Key]
         public int ProductTypeId { get; set; }
