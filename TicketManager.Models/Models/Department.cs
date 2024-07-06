@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TicketManager.Models.Models
 {
-    class Department
+    public class Department
     {
         [Key]
         public int DepartmentId { get; set; }
