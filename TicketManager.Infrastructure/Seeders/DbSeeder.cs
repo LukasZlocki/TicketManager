@@ -317,8 +317,43 @@ namespace TicketManager.Infrastructure.Seeders
                     await _dbContext.SaveChangesAsync();
                 }
 
+                // Seed TicketTests db
+                if (!_dbContext.TicketTests.Any())
+                {
+                    var tickettest1 = new TicketTest()
+                    {
+                        TestParameter = 5,
+                        TestId = 1,
+                        TicketId = 1
+                    };
+                    _dbContext.TicketTests.Add(tickettest1);
 
+                    var tickettest2 = new TicketTest()
+                    {
+                        TestParameter = 10,
+                        TestId = 2,
+                        TicketId = 1
+                    };
+                    _dbContext.TicketTests.Add(tickettest2);
 
+                    var tickettest3 = new TicketTest()
+                    {
+                        TestParameter = 30,
+                        TestId = 2,
+                        TicketId = 2
+                    };
+                    _dbContext.TicketTests.Add(tickettest3);
+
+                    var tickettest4 = new TicketTest()
+                    {
+                        TestParameter = 2,
+                        TestId = 1,
+                        TicketId = 3
+                    };
+                    _dbContext.TicketTests.Add(tickettest4);
+
+                    await _dbContext.SaveChangesAsync();
+                }
             }
         }
 
