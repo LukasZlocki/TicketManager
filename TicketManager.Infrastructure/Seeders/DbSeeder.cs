@@ -186,6 +186,33 @@ namespace TicketManager.Infrastructure.Seeders
                     await _dbContext.SaveChangesAsync();
                 }
 
+                // Seed ReportType db
+                if (!_dbContext.ReportTypes.Any())
+                {
+                    var reptype1 = new ReportType()
+                    {
+                        ReportShortType = "MER",
+                        ReportDescription = "Motor Engineering Report"
+                    };
+                    _dbContext.ReportTypes.Add(reptype1);
+
+                    var reptype2 = new ReportType()
+                    {
+                        ReportShortType = "SER",
+                        ReportDescription = "Steering Engineering Report"
+                    };
+                    _dbContext.ReportTypes.Add(reptype2);
+
+                    var reptype3 = new ReportType()
+                    {
+                        ReportShortType = "CTR",
+                        ReportDescription = "Custom Test Request"
+                    };
+                    _dbContext.ReportTypes.Add(reptype3);
+
+                    await _dbContext.SaveChangesAsync();
+                }
+
             }
         }
 
