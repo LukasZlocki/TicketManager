@@ -26,7 +26,7 @@ builder.Services.AddAuthorization(options =>
 
 // Register DbContext
 builder.Services.AddDbContext<TicketManagerDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("TicketManagerConnectionStrings")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("TicketManagerConnectionString")));
 
 var app = builder.Build();
 
