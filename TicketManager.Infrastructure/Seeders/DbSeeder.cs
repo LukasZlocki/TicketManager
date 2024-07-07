@@ -70,6 +70,26 @@ namespace TicketManager.Infrastructure.Seeders
                     await _dbContext.SaveChangesAsync();
                 }
 
+                // Seed LabLocations db
+                if (!_dbContext.LabLocations.Any())
+                {
+                    var labLoc1 = new LabLocation()
+                    {
+                        Country = "USA",
+                        Factory = "HOP"
+                    };
+                    _dbContext.LabLocations.Add(labLoc1);
+
+                    var labLoc2 = new LabLocation()
+                    {
+                        Country = "Poland",
+                        Factory = "WRC"
+                    };
+                    _dbContext.LabLocations.Add(labLoc2);
+
+                    await _dbContext.SaveChangesAsync();
+                }
+
             }
         }
 
