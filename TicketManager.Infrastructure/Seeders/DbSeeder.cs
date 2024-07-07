@@ -14,39 +14,9 @@ namespace TicketManager.Infrastructure.Seeders
 
         public async Task Seed()
         {
-            // Seed Departments db
+            // Seed TicketManager db
             if(await _dbContext.Database.CanConnectAsync())
             {
-                if (!_dbContext.Departments.Any())
-                {
-                    var department1 = new Department()
-                    {
-                        DepartmentDescription = "Test Department 1",
-                        FactoryLocationId = 1
-                    };
-                    _dbContext.Departments.Add(department1);
-
-                    var department2 = new Department()
-                    {
-                        DepartmentDescription = "Test Department 2",
-                        FactoryLocationId = 2
-                    };
-                    _dbContext.Departments.Add(department2);
-
-                    var department3 = new Department()
-                    {
-                        DepartmentDescription = "Test Department 3",
-                        FactoryLocationId = 3
-                    };
-                    _dbContext.Departments.Add(department3);
-
-                    await _dbContext.SaveChangesAsync();
-                }
-                else
-                {
-                    System.Console.WriteLine("Departments data exist - no need to seed.");
-                }
-
                 // Seed FactoryLocations db
                 if (!_dbContext.FactoryLocations.Any())
                 {
@@ -76,6 +46,37 @@ namespace TicketManager.Infrastructure.Seeders
                 else
                 {
                     System.Console.WriteLine("FactoryLocations data exist - no need to seed.");
+                }
+
+                // Seed Departments db
+                if (!_dbContext.Departments.Any())
+                {
+                    var department1 = new Department()
+                    {
+                        DepartmentDescription = "Test Department 1",
+                        FactoryLocationId = 1
+                    };
+                    _dbContext.Departments.Add(department1);
+
+                    var department2 = new Department()
+                    {
+                        DepartmentDescription = "Test Department 2",
+                        FactoryLocationId = 2
+                    };
+                    _dbContext.Departments.Add(department2);
+
+                    var department3 = new Department()
+                    {
+                        DepartmentDescription = "Test Department 3",
+                        FactoryLocationId = 3
+                    };
+                    _dbContext.Departments.Add(department3);
+
+                    await _dbContext.SaveChangesAsync();
+                }
+                else
+                {
+                    System.Console.WriteLine("Departments data exist - no need to seed.");
                 }
 
                 // Seed LabLocations db
