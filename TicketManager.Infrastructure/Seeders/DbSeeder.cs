@@ -248,6 +248,53 @@ namespace TicketManager.Infrastructure.Seeders
                     await _dbContext.SaveChangesAsync();
                 }
 
+                // Seed Tickets db
+                if (!_dbContext.Tickets.Any())
+                {
+                    var ticket1 = new Ticket()
+                    {
+                        RequestorEmail = "req1@email.com",
+                        ImplementedAt = DateTime.UtcNow,
+                        StartedAt = DateTime.UtcNow,
+                        FinishedAt =DateTime.UtcNow,
+                        DepartmentId = 1,
+                        LabLocationId = 1,
+                        ProductId = 1,
+                        StatusId = 3
+                    };
+                    _dbContext.Tickets.Add(ticket1);
+
+                    var ticket2 = new Ticket()
+                    {
+                        RequestorEmail = "req2@email.com",
+                        ImplementedAt = DateTime.UtcNow,
+                        //StartedAt = DateTime.UtcNow,
+                        //FinishedAt = DateTime.UtcNow,
+                        DepartmentId = 1,
+                        LabLocationId = 1,
+                        ProductId = 1,
+                        StatusId = 1
+                    };
+                    _dbContext.Tickets.Add(ticket2);
+
+                    var ticket3 = new Ticket()
+                    {
+                        RequestorEmail = "req3@email.com",
+                        ImplementedAt = DateTime.UtcNow,
+                        StartedAt = DateTime.UtcNow,
+                        //FinishedAt = DateTime.UtcNow,
+                        DepartmentId = 1,
+                        LabLocationId = 1,
+                        ProductId = 1,
+                        StatusId = 2
+                    };
+                    _dbContext.Tickets.Add(ticket3);
+
+                    await _dbContext.SaveChangesAsync();
+                }
+
+
+
             }
         }
 
