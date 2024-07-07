@@ -213,6 +213,41 @@ namespace TicketManager.Infrastructure.Seeders
                     await _dbContext.SaveChangesAsync();
                 }
 
+                // Seed Tests db
+                if (!_dbContext.Tests.Any())
+                {
+                    var test1 = new Test()
+                    {
+                        TestDescription = "Leakage",
+                        TestUnits ="l/min"
+                    };
+                    _dbContext.Tests.Add(test1);
+
+                    var test2 = new Test()
+                    {
+                        TestDescription = "Slippage",
+                        TestUnits = "RPM"
+                    };
+                    _dbContext.Tests.Add(test2);
+
+                    var test3 = new Test()
+                    {
+                        TestDescription = "Input Torque",
+                        TestUnits = "daNm"
+                    };
+                    _dbContext.Tests.Add(test3);
+
+
+                    var test4 = new Test()
+                    {
+                        TestDescription = "Pressure Drop",
+                        TestUnits = "bar"
+                    };
+                    _dbContext.Tests.Add(test4);
+
+                    await _dbContext.SaveChangesAsync();
+                }
+
             }
         }
 
