@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Authentication.Negotiate;
+using Microsoft.EntityFrameworkCore;
+using TicketManager.Infrastructure.Persistance;
 using TicketManager.Infrastructure.Seeders;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +23,10 @@ builder.Services.AddAuthorization(options =>
     // By default, all incoming requests will be authorized according to the default policy.
     options.FallbackPolicy = options.DefaultPolicy;
 });
+
+// Register DbContext
+builder.Services.AddDbContext<TicketManagerDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("TicketManagerConnectionStrings")));
 
 var app = builder.Build();
 
