@@ -90,6 +90,28 @@ namespace TicketManager.Infrastructure.Seeders
                     await _dbContext.SaveChangesAsync();
                 }
 
+                // Seed Products db
+                if (!_dbContext.Products.Any())
+                {
+                    var product1 = new Product()
+                    {
+                        ProductFamilly = "Motor",
+                        ProductTypeId = 1,
+                        ProductDisplacementId = 1
+                    };
+                    _dbContext.Products.Add(product1);
+
+                    var product2 = new Product()
+                    {
+                        ProductFamilly = "Steering",
+                        ProductTypeId = 2,
+                        ProductDisplacementId = 2
+                    };
+                    _dbContext.Products.Add(product2);
+
+                    await _dbContext.SaveChangesAsync();
+                }
+
             }
         }
 
