@@ -42,6 +42,34 @@ namespace TicketManager.Infrastructure.Seeders
 
                     await _dbContext.SaveChangesAsync();
                 }
+
+                // Seed FactoryLocations db
+                if (!_dbContext.FactoryLocations.Any())
+                {
+                    var factoryLoc1 = new FactoryLocation()
+                    {
+                        Country = "USA",
+                        Factory = "HOP"
+                    };
+                    _dbContext.FactoryLocations.Add(factoryLoc1);
+
+                    var factoryLoc2 = new FactoryLocation()
+                    {
+                        Country = "Poland",
+                        Factory = "WRC"
+                    };
+                    _dbContext.FactoryLocations.Add(factoryLoc2);
+
+                    var factoryLoc3 = new FactoryLocation()
+                    {
+                        Country = "Poland",
+                        Factory = "WRL"
+                    };
+                    _dbContext.FactoryLocations.Add(factoryLoc2);
+
+                    await _dbContext.SaveChangesAsync();
+                }
+
             }
         }
 
