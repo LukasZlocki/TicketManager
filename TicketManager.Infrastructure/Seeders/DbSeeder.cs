@@ -293,6 +293,30 @@ namespace TicketManager.Infrastructure.Seeders
                     await _dbContext.SaveChangesAsync();
                 }
 
+                // Seed TicketStatuses db
+                if (!_dbContext.TicketStatuses.Any())
+                {
+                    var status1 = new TicketStatus()
+                    {
+                        StatusDescription = "Waiting"
+                    };
+                    _dbContext.TicketStatuses.Add(status1);
+
+                    var status2 = new TicketStatus()
+                    {
+                        StatusDescription = "In Progress"
+                    };
+                    _dbContext.TicketStatuses.Add(status2);
+
+                    var status3 = new TicketStatus()
+                    {
+                        StatusDescription = "Finished"
+                    };
+                    _dbContext.TicketStatuses.Add(status3);
+
+                    await _dbContext.SaveChangesAsync();
+                }
+
 
 
             }
