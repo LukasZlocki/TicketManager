@@ -6,7 +6,7 @@ namespace TicketManager.Models.Models
     {
         [Key]
         public int TicketStatusId { get; set; }
-        [StringLength(10)]
+        [StringLength(15)]
         public string? StatusDescription { get; set; }
     }
 }

@@ -285,6 +285,34 @@ namespace TicketManager.Infrastructure.Seeders
                     System.Console.WriteLine("Tests data exist - no need to seed.");
                 }
 
+                // Seed TicketStatuses db
+                if (!_dbContext.TicketStatuses.Any())
+                {
+                    var status1 = new TicketStatus()
+                    {
+                        StatusDescription = "Waiting"
+                    };
+                    _dbContext.TicketStatuses.Add(status1);
+
+                    var status2 = new TicketStatus()
+                    {
+                        StatusDescription = "In Progress"
+                    };
+                    _dbContext.TicketStatuses.Add(status2);
+
+                    var status3 = new TicketStatus()
+                    {
+                        StatusDescription = "Finished"
+                    };
+                    _dbContext.TicketStatuses.Add(status3);
+
+                    await _dbContext.SaveChangesAsync();
+                }
+                else
+                {
+                    System.Console.WriteLine("TicketStatuses data exist - no need to seed.");
+                }
+
                 // Seed Tickets db
                 if (!_dbContext.Tickets.Any())
                 {
@@ -332,34 +360,6 @@ namespace TicketManager.Infrastructure.Seeders
                 else
                 {
                     System.Console.WriteLine("Tickets data exist - no need to seed.");
-                }
-
-                // Seed TicketStatuses db
-                if (!_dbContext.TicketStatuses.Any())
-                {
-                    var status1 = new TicketStatus()
-                    {
-                        StatusDescription = "Waiting"
-                    };
-                    _dbContext.TicketStatuses.Add(status1);
-
-                    var status2 = new TicketStatus()
-                    {
-                        StatusDescription = "In Progress"
-                    };
-                    _dbContext.TicketStatuses.Add(status2);
-
-                    var status3 = new TicketStatus()
-                    {
-                        StatusDescription = "Finished"
-                    };
-                    _dbContext.TicketStatuses.Add(status3);
-
-                    await _dbContext.SaveChangesAsync();
-                }
-                else
-                {
-                    System.Console.WriteLine("TicketStatuses data exist - no need to seed.");
                 }
 
                 // Seed TicketTests db
