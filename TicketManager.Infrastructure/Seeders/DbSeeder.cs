@@ -65,7 +65,7 @@ namespace TicketManager.Infrastructure.Seeders
                         Country = "Poland",
                         Factory = "WRL"
                     };
-                    _dbContext.FactoryLocations.Add(factoryLoc2);
+                    _dbContext.FactoryLocations.Add(factoryLoc3);
 
                     await _dbContext.SaveChangesAsync();
                 }
