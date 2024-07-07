@@ -110,6 +110,26 @@ namespace TicketManager.Infrastructure.Seeders
                     await _dbContext.SaveChangesAsync();
                 }
 
+                // Seed ProductTypes db
+                if (!_dbContext.ProductTypes.Any())
+                {
+                    var type1 = new ProductType()
+                    {
+                        ProductTypeDesc = "OMR",
+                        ProductId = 1
+                    };
+                    _dbContext.ProductTypes.Add(type1);
+
+                    var type2 = new ProductType()
+                    {
+                        ProductTypeDesc = "ON",
+                        ProductId = 2
+                    };
+                    _dbContext.ProductTypes.Add(type2);
+
+                    await _dbContext.SaveChangesAsync();
+                }
+
                 // Seed Products db
                 if (!_dbContext.Products.Any())
                 {
