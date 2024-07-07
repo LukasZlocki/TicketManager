@@ -152,6 +152,41 @@ namespace TicketManager.Infrastructure.Seeders
                     await _dbContext.SaveChangesAsync();
                 }
 
+                // Seed ReportStructure db
+                if (!_dbContext.ReportStructures.Any())
+                {
+                    var structure1 = new ReportStructure()
+                    {
+                        FolderDescription = "00 Test description folder",
+                        ReportTypeId = 1
+                    };
+                    _dbContext.ReportStructures.Add(structure1);
+
+                    var structure2 = new ReportStructure()
+                    {
+                        FolderDescription = "10 Test result folder",
+                        ReportTypeId = 1
+                    };
+                    _dbContext.ReportStructures.Add(structure2);
+
+                    var structure3 = new ReportStructure()
+                    {
+                        FolderDescription = "1 Test description folder",
+                        ReportTypeId = 2
+                    };
+                    _dbContext.ReportStructures.Add(structure3);
+
+                    var structure4 = new ReportStructure()
+                    {
+                        FolderDescription = "2 Test result folder",
+                        ReportTypeId = 2
+                    };
+                    _dbContext.ReportStructures.Add(structure4);
+
+
+                    await _dbContext.SaveChangesAsync();
+                }
+
             }
         }
 
