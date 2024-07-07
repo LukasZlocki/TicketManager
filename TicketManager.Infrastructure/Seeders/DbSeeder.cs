@@ -42,6 +42,10 @@ namespace TicketManager.Infrastructure.Seeders
 
                     await _dbContext.SaveChangesAsync();
                 }
+                else
+                {
+                    System.Console.WriteLine("Departments data exist - no need to seed.");
+                }
 
                 // Seed FactoryLocations db
                 if (!_dbContext.FactoryLocations.Any())
@@ -69,6 +73,10 @@ namespace TicketManager.Infrastructure.Seeders
 
                     await _dbContext.SaveChangesAsync();
                 }
+                else
+                {
+                    System.Console.WriteLine("FactoryLocations data exist - no need to seed.");
+                }
 
                 // Seed LabLocations db
                 if (!_dbContext.LabLocations.Any())
@@ -88,6 +96,10 @@ namespace TicketManager.Infrastructure.Seeders
                     _dbContext.LabLocations.Add(labLoc2);
 
                     await _dbContext.SaveChangesAsync();
+                }
+                else
+                {
+                    System.Console.WriteLine("LabLocations data exist - no need to seed.");
                 }
 
                 // Seed ProductDisplacements db
@@ -109,6 +121,10 @@ namespace TicketManager.Infrastructure.Seeders
 
                     await _dbContext.SaveChangesAsync();
                 }
+                else
+                {
+                    System.Console.WriteLine("ProductDisplacements data exist - no need to seed.");
+                }
 
                 // Seed ProductTypes db
                 if (!_dbContext.ProductTypes.Any())
@@ -128,6 +144,10 @@ namespace TicketManager.Infrastructure.Seeders
                     _dbContext.ProductTypes.Add(type2);
 
                     await _dbContext.SaveChangesAsync();
+                }
+                else
+                {
+                    System.Console.WriteLine("ProductTypes data exist - no need to seed.");
                 }
 
                 // Seed Products db
@@ -151,8 +171,12 @@ namespace TicketManager.Infrastructure.Seeders
 
                     await _dbContext.SaveChangesAsync();
                 }
+                else
+                {
+                    System.Console.WriteLine("Products data exist - no need to seed.");
+                }
 
-                // Seed ReportStructure db
+                // Seed ReportStructures db
                 if (!_dbContext.ReportStructures.Any())
                 {
                     var structure1 = new ReportStructure()
@@ -185,8 +209,12 @@ namespace TicketManager.Infrastructure.Seeders
 
                     await _dbContext.SaveChangesAsync();
                 }
+                else
+                {
+                    System.Console.WriteLine("ReportStructures data exist - no need to seed.");
+                }
 
-                // Seed ReportType db
+                // Seed ReportTypes db
                 if (!_dbContext.ReportTypes.Any())
                 {
                     var reptype1 = new ReportType()
@@ -211,6 +239,10 @@ namespace TicketManager.Infrastructure.Seeders
                     _dbContext.ReportTypes.Add(reptype3);
 
                     await _dbContext.SaveChangesAsync();
+                }
+                else
+                {
+                    System.Console.WriteLine("ReportTypes data exist - no need to seed.");
                 }
 
                 // Seed Tests db
@@ -246,6 +278,10 @@ namespace TicketManager.Infrastructure.Seeders
                     _dbContext.Tests.Add(test4);
 
                     await _dbContext.SaveChangesAsync();
+                }
+                else
+                {
+                    System.Console.WriteLine("Tests data exist - no need to seed.");
                 }
 
                 // Seed Tickets db
@@ -292,6 +328,10 @@ namespace TicketManager.Infrastructure.Seeders
 
                     await _dbContext.SaveChangesAsync();
                 }
+                else
+                {
+                    System.Console.WriteLine("Tickets data exist - no need to seed.");
+                }
 
                 // Seed TicketStatuses db
                 if (!_dbContext.TicketStatuses.Any())
@@ -315,6 +355,10 @@ namespace TicketManager.Infrastructure.Seeders
                     _dbContext.TicketStatuses.Add(status3);
 
                     await _dbContext.SaveChangesAsync();
+                }
+                else
+                {
+                    System.Console.WriteLine("TicketStatuses data exist - no need to seed.");
                 }
 
                 // Seed TicketTests db
@@ -353,6 +397,10 @@ namespace TicketManager.Infrastructure.Seeders
                     _dbContext.TicketTests.Add(tickettest4);
 
                     await _dbContext.SaveChangesAsync();
+                }
+                else
+                {
+                    System.Console.WriteLine("TicketTests data exist - no need to seed.");
                 }
             }
         }
