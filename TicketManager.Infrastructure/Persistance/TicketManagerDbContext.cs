@@ -3,7 +3,7 @@ using TicketManager.Models.Models;
 
 namespace TicketManager.Infrastructure.Persistance
 {
-    class TicketManagerDbContext : DbContext
+    public class TicketManagerDbContext : DbContext
     {
         public DbSet<Department> Departments { get; set; }
         public DbSet<FactoryLocation> FactoryLocations { get; set; }
