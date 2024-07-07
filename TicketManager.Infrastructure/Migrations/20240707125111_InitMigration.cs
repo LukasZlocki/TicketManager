@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TicketManager.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class InitMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -73,7 +73,7 @@ namespace TicketManager.Infrastructure.Migrations
                 {
                     ReportStructureId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FolderDescription = table.Column<int>(type: "int", maxLength: 100, nullable: false),
+                    FolderDescription = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     ReportTypeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -115,7 +115,7 @@ namespace TicketManager.Infrastructure.Migrations
                 {
                     TicketStatusId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    StatusDescription = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true)
+                    StatusDescription = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true)
                 },
                 constraints: table =>
                 {

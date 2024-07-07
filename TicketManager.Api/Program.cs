@@ -1,4 +1,7 @@
 using Microsoft.AspNetCore.Authentication.Negotiate;
+using Microsoft.EntityFrameworkCore;
+using TicketManager.Infrastructure.Persistance;
+using TicketManager.Infrastructure.Seeders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,11 +15,18 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAuthentication(NegotiateDefaults.AuthenticationScheme)
    .AddNegotiate();
 
+// Register seeder
+builder.Services.AddScoped<DbSeeder>();
+
 builder.Services.AddAuthorization(options =>
 {
     // By default, all incoming requests will be authorized according to the default policy.
     options.FallbackPolicy = options.DefaultPolicy;
 });
+
+// Register DbContext
+builder.Services.AddDbContext<TicketManagerDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("TicketManagerConnectionString")));
 
 var app = builder.Build();
 
@@ -26,6 +36,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// Seeding
+var scope = app.Services.CreateScope();
+var seeder = scope.ServiceProvider.GetRequiredService<DbSeeder>();
+await seeder.Seed();
 
 app.UseHttpsRedirection();
 

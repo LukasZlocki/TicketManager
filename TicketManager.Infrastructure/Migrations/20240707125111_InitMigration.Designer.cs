@@ -12,8 +12,8 @@ using TicketManager.Infrastructure.Persistance;
 namespace TicketManager.Infrastructure.Migrations
 {
     [DbContext(typeof(TicketManagerDbContext))]
-    [Migration("20240707095750_Init")]
-    partial class Init
+    [Migration("20240707125111_InitMigration")]
+    partial class InitMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -164,9 +164,9 @@ namespace TicketManager.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReportStructureId"));
 
-                    b.Property<int>("FolderDescription")
+                    b.Property<string>("FolderDescription")
                         .HasMaxLength(100)
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("ReportTypeId")
                         .HasColumnType("int");
@@ -273,8 +273,8 @@ namespace TicketManager.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TicketStatusId"));
 
                     b.Property<string>("StatusDescription")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
 
                     b.HasKey("TicketStatusId");
 
