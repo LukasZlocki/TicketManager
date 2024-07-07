@@ -183,7 +183,6 @@ namespace TicketManager.Infrastructure.Seeders
                     };
                     _dbContext.ReportStructures.Add(structure4);
 
-
                     await _dbContext.SaveChangesAsync();
                 }
 
