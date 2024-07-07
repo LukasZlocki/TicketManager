@@ -5,6 +5,11 @@ namespace TicketManager.Infrastructure.Persistance
 {
     public class TicketManagerDbContext : DbContext
     {
+        public TicketManagerDbContext(DbContextOptions<TicketManagerDbContext> options) : base(options)
+        {
+
+        }
+
         public DbSet<Department> Departments { get; set; }
         public DbSet<FactoryLocation> FactoryLocations { get; set; }
         public DbSet<LabLocation> LabLocations { get; set; }
@@ -18,9 +23,11 @@ namespace TicketManager.Infrastructure.Persistance
         public DbSet<TicketStatus> TicketStatuses { get; set; }
         public DbSet<TicketTest> TicketTests { get; set; }
 
+        /*
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server=localhost,1433;Initial Catalog=TicketManager;User ID=SA;Password=TicketManager!1;TrustServerCertificate=true");
         }
+        */
     }
 }
