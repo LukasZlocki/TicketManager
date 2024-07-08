@@ -12,8 +12,8 @@ using TicketManager.Infrastructure.Persistance;
 namespace TicketManager.Infrastructure.Migrations
 {
     [DbContext(typeof(TicketManagerDbContext))]
-    [Migration("20240707125111_InitMigration")]
-    partial class InitMigration
+    [Migration("20240708204820_UpdateTestModel")]
+    partial class UpdateTestModel
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -204,6 +204,9 @@ namespace TicketManager.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TestId"));
+
+                    b.Property<int>("LabLocationId")
+                        .HasColumnType("int");
 
                     b.Property<string>("TestDescription")
                         .HasMaxLength(30)

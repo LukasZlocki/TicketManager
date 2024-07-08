@@ -202,6 +202,9 @@ namespace TicketManager.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TestId"));
 
+                    b.Property<int>("LabLocationId")
+                        .HasColumnType("int");
+
                     b.Property<string>("TestDescription")
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
