@@ -5,11 +5,12 @@ namespace TicketManager.Infrastructure.Persistance
 {
     public class TicketManagerDbContext : DbContext
     {
-        
+        ///*
         public TicketManagerDbContext(DbContextOptions<TicketManagerDbContext> options) : base(options)
         {
 
         }
+        //*/
             
         public DbSet<Department> Departments { get; set; }
         public DbSet<FactoryLocation> FactoryLocations { get; set; }
