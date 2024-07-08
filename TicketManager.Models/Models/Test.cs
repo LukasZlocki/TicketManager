@@ -10,5 +10,7 @@ namespace TicketManager.Models.Models
         public string? TestDescription { get; set; }
         [StringLength(10)]
         public string? TestUnits { get; set; }
+
+        public int LabLocationId { get; set; }
     }
 }
