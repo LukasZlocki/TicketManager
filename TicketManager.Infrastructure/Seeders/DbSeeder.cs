@@ -252,29 +252,32 @@ namespace TicketManager.Infrastructure.Seeders
                     var test1 = new Test()
                     {
                         TestDescription = "Leakage",
-                        TestUnits ="l/min"
+                        TestUnits ="l/min",
+                        LabLocationId = 2
                     };
                     _dbContext.Tests.Add(test1);
 
                     var test2 = new Test()
                     {
                         TestDescription = "Slippage",
-                        TestUnits = "RPM"
+                        TestUnits = "RPM",
+                        LabLocationId = 2
                     };
                     _dbContext.Tests.Add(test2);
 
                     var test3 = new Test()
                     {
                         TestDescription = "Input Torque",
-                        TestUnits = "daNm"
+                        TestUnits = "daNm",
+                        LabLocationId = 1
                     };
                     _dbContext.Tests.Add(test3);
-
 
                     var test4 = new Test()
                     {
                         TestDescription = "Pressure Drop",
-                        TestUnits = "bar"
+                        TestUnits = "bar",
+                        LabLocationId = 1
                     };
                     _dbContext.Tests.Add(test4);
 
