@@ -1,6 +1,6 @@
 ﻿using TicketManager.Models.Models;
 
-namespace TicketManager.Services.ProductDisplacement_service
+namespace TicketManager.Services.ProductDisplacement_Services
 {
     public interface IProductDisplacementService
     {

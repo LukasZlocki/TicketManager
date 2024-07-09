@@ -1,6 +1,6 @@
 ﻿using TicketManager.Models.Models;
 
-namespace TicketManager.Services.FactoryLocation_service
+namespace TicketManager.Services.FactoryLocation_Services
 {
     public interface IFactoryLocationService
     {

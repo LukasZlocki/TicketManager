@@ -1,6 +1,6 @@
 ﻿using TicketManager.Models.Models;
 
-namespace TicketManager.Services.Product_service
+namespace TicketManager.Services.Product_Services
 {
     public interface IProductService
     {

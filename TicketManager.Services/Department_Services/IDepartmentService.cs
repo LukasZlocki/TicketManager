@@ -1,6 +1,6 @@
 ﻿using TicketManager.Models.Models;
 
-namespace TicketManager.Services.Department_service
+namespace TicketManager.Services.Department_Services
 {
     public interface IDepartmentService
     {

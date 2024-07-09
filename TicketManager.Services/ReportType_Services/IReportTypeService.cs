@@ -1,6 +1,6 @@
 ﻿using TicketManager.Models.Models;
 
-namespace TicketManager.Services.ReportType_service
+namespace TicketManager.Services.ReportType_Services
 {
     public interface IReportTypeService
     {
