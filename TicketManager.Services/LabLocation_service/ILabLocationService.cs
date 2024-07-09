@@ -2,7 +2,7 @@
 
 namespace TicketManager.Services.LabLocation_service
 {
-    public interface ILaboLocation
+    public interface ILabLocationService
     {
         public List<LabLocation> GetAllLabLocations();
         public LabLocation GetLablocationByLabLocationId(int labLocationId);
