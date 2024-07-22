@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Authentication.Negotiate;
 using Microsoft.EntityFrameworkCore;
 using TicketManager.Infrastructure.Persistance;
 using TicketManager.Infrastructure.Seeders;
+using TicketManager.Services.FactoryLocation_Services;
+using TicketManager.Services.LabLocation_Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +29,9 @@ builder.Services.AddAuthorization(options =>
 // Register DbContext
 builder.Services.AddDbContext<TicketManagerDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("TicketManagerConnectionString")));
+
+builder.Services.AddTransient<ILabLocationService, LabLocationService>();
+builder.Services.AddTransient<IFactoryLocationService, FactoryLocationService>();
 
 var app = builder.Build();
 
