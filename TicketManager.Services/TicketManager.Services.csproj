@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TicketManager.Models\TicketManager.Models.csproj" />
+  </ItemGroup>
+
 </Project>
