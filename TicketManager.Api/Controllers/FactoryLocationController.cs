@@ -6,8 +6,8 @@ namespace TicketManager.Api.Controllers
     [ApiController]
     public class FactoryLocationController : Controller
     {
-        private readonly IFactoryLocationService _factoryLocationService;
 
+        private readonly IFactoryLocationService _factoryLocationService;
         public FactoryLocationController(IFactoryLocationService factoryLocationService)
         {
             _factoryLocationService = factoryLocationService;
