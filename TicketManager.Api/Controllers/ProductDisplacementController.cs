@@ -13,7 +13,7 @@ namespace TicketManager.Api.Controllers
         }
 
         [HttpGet("api/productdisplacementbyproductfamily/{id}")]
-        public ActionResult GetFactoryLocationById(int id)
+        public ActionResult GetProductDisplacementByProductFamily(int id)
         {
             var displacements = _productDisplacementService.GetProductDisplacementsByProductFamilyId(id);
             return Ok(displacements);
