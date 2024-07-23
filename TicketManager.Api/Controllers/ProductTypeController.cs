@@ -22,8 +22,8 @@ namespace TicketManager.Api.Controllers
         [HttpGet("api/producttype/{id}")]
         public ActionResult GGetProductType(int id)
         {
-            var productTypes = _productTypeService.GetProductTypeById(id);
-            return Ok(productTypes);
+            var productType = _productTypeService.GetProductTypeById(id);
+            return Ok(productType);
         }
     }
 }
