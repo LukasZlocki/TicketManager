@@ -2,8 +2,13 @@ using Microsoft.AspNetCore.Authentication.Negotiate;
 using Microsoft.EntityFrameworkCore;
 using TicketManager.Infrastructure.Persistance;
 using TicketManager.Infrastructure.Seeders;
+using TicketManager.Services.Department_Services;
 using TicketManager.Services.FactoryLocation_Services;
 using TicketManager.Services.LabLocation_Services;
+using TicketManager.Services.Product_Services;
+using TicketManager.Services.ProductDisplacement_Services;
+using TicketManager.Services.ProductType_Services;
+using TicketManager.Services.ReportType_Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +37,10 @@ builder.Services.AddDbContext<TicketManagerDbContext>(options =>
 
 builder.Services.AddTransient<ILabLocationService, LabLocationService>();
 builder.Services.AddTransient<IFactoryLocationService, FactoryLocationService>();
+builder.Services.AddTransient<IDepartmentService, DepartmentService>();
+builder.Services.AddTransient<IProductDisplacementService, ProductDisplacementService>();
+builder.Services.AddTransient<IProductTypeService, ProductTypeService>();
+builder.Services.AddTransient<IReportTypeService, ReportTypeService>();
 
 var app = builder.Build();
 
