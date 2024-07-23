@@ -24,8 +24,8 @@ namespace TicketManager.Api.Controllers
         [HttpGet("api/reporttype/{id}")]
         public ActionResult GetReportType(int id)
         {
-            var reportTytpe = _reportTypeService.GetReportTypeById(id);
-            return Ok(reportTytpe);
+            var reportType = _reportTypeService.GetReportTypeById(id);
+            return Ok(reportType);
         }
     }
 }
