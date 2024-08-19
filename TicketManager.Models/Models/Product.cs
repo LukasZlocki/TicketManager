@@ -7,8 +7,10 @@ namespace TicketManager.Models.Models
     {
         [Key]
         public int ProductId { get; set; }
-        [StringLength(10)]
-        public string? ProductFamilly { get; set; }
+
+        public int ProductFamilyId { get; set; }
+        [ForeignKey("ProductFamilyId")]
+        public ProductFamily? ProductFamily { get; set; }
 
         public int ProductTypeId { get; set; }
         [ForeignKey("ProductTypeId")]

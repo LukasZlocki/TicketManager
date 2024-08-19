@@ -30,7 +30,5 @@ namespace TicketManager.Models.Models
         public int StatusId { get; set; }
         [ForeignKey("StatusId")]
         public TicketStatus? TicketStatus { get; set; }
-
-
     }
 }
