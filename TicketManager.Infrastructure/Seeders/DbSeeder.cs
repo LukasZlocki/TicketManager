@@ -15,17 +15,6 @@ namespace TicketManager.Infrastructure.Seeders
         public async Task Seed()
         {
 
-
-        private readonly TicketManagerDbContext _dbContext;
-
-        public DbSeeder(TicketManagerDbContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
-
-        public async Task Seed()
-        {
-
             // Seed TicketManager db
             if (await _dbContext.Database.CanConnectAsync())
             {
