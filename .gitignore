@@ -8,8 +8,7 @@ TicketManager.Models/bin/*
 TicketManager.Infrastructure/obj/*
 TicketManager.Infrastructure/bin/*
 
-TicketManager.Web/TicketManager.Web/bin/*
-TicketManager.Web/TicketManager.Web/obj/*
+TicketManager.Web/bin/*
+TicketManager.Web/obj/*
 
-TicketManager.Web/TicketManager.Web.Client/bin/*
-TicketManager.Web/TicketManager.Web.Client/obj/*
+
