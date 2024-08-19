@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TicketManager.Services.ReportType_Services;
+using TicketManager.Services.ReportTypeServices;
 
 namespace TicketManager.Api.Controllers
 {
+    [ApiController]
     public class ReportTypeController : Controller
     {
         private readonly IReportTypeService _reportTypeService;

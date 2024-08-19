@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TicketManager.Services.LabLocation_Services;
+using TicketManager.Services.LabLocationServices;
 
 namespace TicketManager.Api.Controllers
 {
+    [ApiController]
     public class LabLocationController : Controller
     {
         private readonly ILabLocationService _labLocationService;
@@ -27,6 +28,5 @@ namespace TicketManager.Api.Controllers
             var locations = _labLocationService.GetLablocationByLabLocationId(id);
             return Ok(locations);
         }
-
     }
 }

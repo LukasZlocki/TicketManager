@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TicketManager.Services.Product_Services;
+using TicketManager.Services.ProductServices;
 
 namespace TicketManager.Api.Controllers
 {
@@ -13,11 +13,20 @@ namespace TicketManager.Api.Controllers
             _productService = productService;
         }
 
-        [HttpGet("api/productfamily")]
-        public ActionResult GetAllProductFamilies()
+        // GET
+        [HttpGet("api/products")]
+        public ActionResult GetAllProducts()
         {
-            var productFamilies = _productService.GetAllProductFamilies();
-            return Ok(productFamilies);
+            var products = _productService.GetAllProducts();
+            return Ok(products);
+        }
+
+        // GET
+        [HttpGet("api/product/{id}")]
+        public ActionResult GetProductById(int id)
+        {
+            var product = _productService.GetProductById(id);
+            return Ok(product);
         }
     }
 }
