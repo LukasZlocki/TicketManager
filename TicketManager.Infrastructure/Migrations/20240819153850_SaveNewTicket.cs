@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TicketManager.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class UpdateTestModel : Migration
+    public partial class SaveNewTicket : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -46,11 +46,24 @@ namespace TicketManager.Infrastructure.Migrations
                     ProductDisplacementId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Displacement = table.Column<int>(type: "int", nullable: false),
-                    ProductId = table.Column<int>(type: "int", nullable: false)
+                    ProductFamilyId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ProductDisplacements", x => x.ProductDisplacementId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProductFamilies",
+                columns: table => new
+                {
+                    ProductFamilyId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FamilyDescription = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductFamilies", x => x.ProductFamilyId);
                 });
 
             migrationBuilder.CreateTable(
@@ -60,7 +73,7 @@ namespace TicketManager.Infrastructure.Migrations
                     ProductTypeId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ProductTypeDesc = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
-                    ProductId = table.Column<int>(type: "int", nullable: false)
+                    ProductFamilyId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -93,6 +106,21 @@ namespace TicketManager.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ReportTypes", x => x.ReportTypeId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TestParameters",
+                columns: table => new
+                {
+                    TestParameterId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ParameterDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ParameterUnit = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TestId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TestParameters", x => x.TestParameterId);
                 });
 
             migrationBuilder.CreateTable(
@@ -149,7 +177,7 @@ namespace TicketManager.Infrastructure.Migrations
                 {
                     ProductId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductFamilly = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
+                    ProductFamilyId = table.Column<int>(type: "int", nullable: false),
                     ProductTypeId = table.Column<int>(type: "int", nullable: false),
                     ProductDisplacementId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -161,6 +189,12 @@ namespace TicketManager.Infrastructure.Migrations
                         column: x => x.ProductDisplacementId,
                         principalTable: "ProductDisplacements",
                         principalColumn: "ProductDisplacementId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Products_ProductFamilies_ProductFamilyId",
+                        column: x => x.ProductFamilyId,
+                        principalTable: "ProductFamilies",
+                        principalColumn: "ProductFamilyId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Products_ProductTypes_ProductTypeId",
@@ -220,7 +254,6 @@ namespace TicketManager.Infrastructure.Migrations
                 {
                     TicketTestId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TestParameter = table.Column<double>(type: "float", nullable: false),
                     TestId = table.Column<int>(type: "int", nullable: false),
                     TicketId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -241,6 +274,33 @@ namespace TicketManager.Infrastructure.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "TicketTestParameters",
+                columns: table => new
+                {
+                    TicketTestParameterId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ParameterValue = table.Column<double>(type: "float", nullable: false),
+                    TestParameterId = table.Column<int>(type: "int", nullable: false),
+                    TicketTestId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TicketTestParameters", x => x.TicketTestParameterId);
+                    table.ForeignKey(
+                        name: "FK_TicketTestParameters_TestParameters_TestParameterId",
+                        column: x => x.TestParameterId,
+                        principalTable: "TestParameters",
+                        principalColumn: "TestParameterId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TicketTestParameters_TicketTests_TicketTestId",
+                        column: x => x.TicketTestId,
+                        principalTable: "TicketTests",
+                        principalColumn: "TicketTestId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Departments_FactoryLocationId",
                 table: "Departments",
@@ -250,6 +310,11 @@ namespace TicketManager.Infrastructure.Migrations
                 name: "IX_Products_ProductDisplacementId",
                 table: "Products",
                 column: "ProductDisplacementId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_ProductFamilyId",
+                table: "Products",
+                column: "ProductFamilyId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_ProductTypeId",
@@ -277,6 +342,16 @@ namespace TicketManager.Infrastructure.Migrations
                 column: "StatusId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_TicketTestParameters_TestParameterId",
+                table: "TicketTestParameters",
+                column: "TestParameterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TicketTestParameters_TicketTestId",
+                table: "TicketTestParameters",
+                column: "TicketTestId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TicketTests_TestId",
                 table: "TicketTests",
                 column: "TestId");
@@ -295,6 +370,12 @@ namespace TicketManager.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "ReportTypes");
+
+            migrationBuilder.DropTable(
+                name: "TicketTestParameters");
+
+            migrationBuilder.DropTable(
+                name: "TestParameters");
 
             migrationBuilder.DropTable(
                 name: "TicketTests");
@@ -322,6 +403,9 @@ namespace TicketManager.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "ProductDisplacements");
+
+            migrationBuilder.DropTable(
+                name: "ProductFamilies");
 
             migrationBuilder.DropTable(
                 name: "ProductTypes");

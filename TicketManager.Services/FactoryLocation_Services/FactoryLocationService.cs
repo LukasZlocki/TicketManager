@@ -12,12 +12,21 @@ namespace TicketManager.Services.FactoryLocation_Services
             _db = db;
         }
 
+        /// <summary>
+        /// Returns all factory locations
+        /// </summary>
+        /// <returns>List of FactoryLocation objects</returns>
         public List<FactoryLocation> GetAllFactoryLocations()
         {
             var service = _db.FactoryLocations.ToList();
             return service;
         }
 
+        /// <summary>
+        /// Returns factory location object by its primary key
+        /// </summary>
+        /// <param name="factoryLocationId"></param>
+        /// <returns>FactoryLocation object</returns>
         public FactoryLocation GetFactoryLocationByFactoryLocationId(int factoryLocationId)
         {
             var service = _db.FactoryLocations.FirstOrDefault(id => id.FactoryLocationId == factoryLocationId);

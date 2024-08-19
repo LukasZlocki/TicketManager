@@ -98,9 +98,8 @@ namespace TicketManager.Infrastructure.Migrations
                     b.Property<int>("ProductDisplacementId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ProductFamilly")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                    b.Property<int>("ProductFamilyId")
+                        .HasColumnType("int");
 
                     b.Property<int>("ProductTypeId")
                         .HasColumnType("int");
@@ -108,6 +107,8 @@ namespace TicketManager.Infrastructure.Migrations
                     b.HasKey("ProductId");
 
                     b.HasIndex("ProductDisplacementId");
+
+                    b.HasIndex("ProductFamilyId");
 
                     b.HasIndex("ProductTypeId");
 
@@ -125,12 +126,29 @@ namespace TicketManager.Infrastructure.Migrations
                     b.Property<int>("Displacement")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProductId")
+                    b.Property<int>("ProductFamilyId")
                         .HasColumnType("int");
 
                     b.HasKey("ProductDisplacementId");
 
                     b.ToTable("ProductDisplacements");
+                });
+
+            modelBuilder.Entity("TicketManager.Models.Models.ProductFamily", b =>
+                {
+                    b.Property<int>("ProductFamilyId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductFamilyId"));
+
+                    b.Property<string>("FamilyDescription")
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.HasKey("ProductFamilyId");
+
+                    b.ToTable("ProductFamilies");
                 });
 
             modelBuilder.Entity("TicketManager.Models.Models.ProductType", b =>
@@ -141,7 +159,7 @@ namespace TicketManager.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProductTypeId"));
 
-                    b.Property<int>("ProductId")
+                    b.Property<int>("ProductFamilyId")
                         .HasColumnType("int");
 
                     b.Property<string>("ProductTypeDesc")
@@ -218,6 +236,28 @@ namespace TicketManager.Infrastructure.Migrations
                     b.ToTable("Tests");
                 });
 
+            modelBuilder.Entity("TicketManager.Models.Models.TestParameter", b =>
+                {
+                    b.Property<int>("TestParameterId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TestParameterId"));
+
+                    b.Property<string>("ParameterDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ParameterUnit")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TestId")
+                        .HasColumnType("int");
+
+                    b.HasKey("TestParameterId");
+
+                    b.ToTable("TestParameters");
+                });
+
             modelBuilder.Entity("TicketManager.Models.Models.Ticket", b =>
                 {
                     b.Property<int>("TicketId")
@@ -292,9 +332,6 @@ namespace TicketManager.Infrastructure.Migrations
                     b.Property<int>("TestId")
                         .HasColumnType("int");
 
-                    b.Property<double>("TestParameter")
-                        .HasColumnType("float");
-
                     b.Property<int>("TicketId")
                         .HasColumnType("int");
 
@@ -305,6 +342,32 @@ namespace TicketManager.Infrastructure.Migrations
                     b.HasIndex("TicketId");
 
                     b.ToTable("TicketTests");
+                });
+
+            modelBuilder.Entity("TicketManager.Models.Models.TicketTestParameter", b =>
+                {
+                    b.Property<int>("TicketTestParameterId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TicketTestParameterId"));
+
+                    b.Property<double>("ParameterValue")
+                        .HasColumnType("float");
+
+                    b.Property<int>("TestParameterId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TicketTestId")
+                        .HasColumnType("int");
+
+                    b.HasKey("TicketTestParameterId");
+
+                    b.HasIndex("TestParameterId");
+
+                    b.HasIndex("TicketTestId");
+
+                    b.ToTable("TicketTestParameters");
                 });
 
             modelBuilder.Entity("TicketManager.Models.Models.Department", b =>
@@ -326,6 +389,12 @@ namespace TicketManager.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("TicketManager.Models.Models.ProductFamily", "ProductFamily")
+                        .WithMany()
+                        .HasForeignKey("ProductFamilyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("TicketManager.Models.Models.ProductType", "ProductType")
                         .WithMany()
                         .HasForeignKey("ProductTypeId")
@@ -333,6 +402,8 @@ namespace TicketManager.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("ProductDisplacement");
+
+                    b.Navigation("ProductFamily");
 
                     b.Navigation("ProductType");
                 });
@@ -389,9 +460,31 @@ namespace TicketManager.Infrastructure.Migrations
                     b.Navigation("Test");
                 });
 
+            modelBuilder.Entity("TicketManager.Models.Models.TicketTestParameter", b =>
+                {
+                    b.HasOne("TicketManager.Models.Models.TestParameter", "TestParameter")
+                        .WithMany()
+                        .HasForeignKey("TestParameterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TicketManager.Models.Models.TicketTest", null)
+                        .WithMany("TicketTestParameters")
+                        .HasForeignKey("TicketTestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TestParameter");
+                });
+
             modelBuilder.Entity("TicketManager.Models.Models.Ticket", b =>
                 {
                     b.Navigation("TicketTests");
+                });
+
+            modelBuilder.Entity("TicketManager.Models.Models.TicketTest", b =>
+                {
+                    b.Navigation("TicketTestParameters");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,15 +1,16 @@
 ﻿using TicketManager.Infrastructure.Persistance;
 using TicketManager.Models.Models;
+using TicketManager.Services.LabLocationServices;
 
 namespace TicketManager.Services.LabLocation_Services
 {
     public class LabLocationService : ILabLocationService
     {
         private readonly TicketManagerDbContext _db;
-        
+
         public LabLocationService(TicketManagerDbContext db)
         {
-            _db = db;   
+            _db = db;
         }
 
         /// <summary>
@@ -23,7 +24,7 @@ namespace TicketManager.Services.LabLocation_Services
         }
 
         /// <summary>
-        /// Returns lab location by primary key
+        /// Returns lab location by its primary key
         /// </summary>
         /// <param name="labLocationId"></param>
         /// <returns></returns>

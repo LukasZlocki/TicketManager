@@ -1,10 +1,10 @@
 ﻿using TicketManager.Models.Models;
 
-namespace TicketManager.Services.Product_Services
+namespace TicketManager.Services.ProductServices
 {
     public interface IProductService
     {
-        public List<Product> GetAllProductFamilies();
-        public Product GetProductById(int priductId);
+        public List<Product> GetAllProducts();
+        public Product GetProductById(int productId);
     }
 }

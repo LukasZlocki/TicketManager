@@ -13,12 +13,22 @@ namespace TicketManager.Services.Test_services
             _db = db;
         }
 
+        /// <summary>
+        /// Returns test object by its primary key
+        /// </summary>
+        /// <param name="testId"></param>
+        /// <returns>Test object</returns>
         public Test GetTestById(int testId)
         {
             var service = _db.Tests.FirstOrDefault(id => id.TestId == testId);
             return service ?? new Test();
         }
 
+        /// <summary>
+        /// Returns all tests related to lab locations by lab loaction primary key
+        /// </summary>
+        /// <param name="labLocationId"></param>
+        /// <returns></returns>
         public List<Test> GetTestsByLabLocation(int labLocationId)
         {
             var service = _db.Tests

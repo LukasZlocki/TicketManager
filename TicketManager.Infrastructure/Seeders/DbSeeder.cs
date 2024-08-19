@@ -14,8 +14,9 @@ namespace TicketManager.Infrastructure.Seeders
 
         public async Task Seed()
         {
+
             // Seed TicketManager db
-            if(await _dbContext.Database.CanConnectAsync())
+            if (await _dbContext.Database.CanConnectAsync())
             {
                 // Seed FactoryLocations db
                 if (!_dbContext.FactoryLocations.Any())
@@ -33,13 +34,6 @@ namespace TicketManager.Infrastructure.Seeders
                         Factory = "WRC"
                     };
                     _dbContext.FactoryLocations.Add(factoryLoc2);
-
-                    var factoryLoc3 = new FactoryLocation()
-                    {
-                        Country = "Poland",
-                        Factory = "WRL"
-                    };
-                    _dbContext.FactoryLocations.Add(factoryLoc3);
 
                     await _dbContext.SaveChangesAsync();
                 }
@@ -68,7 +62,7 @@ namespace TicketManager.Infrastructure.Seeders
                     var department3 = new Department()
                     {
                         DepartmentDescription = "Test Department 3",
-                        FactoryLocationId = 3
+                        FactoryLocationId = 2
                     };
                     _dbContext.Departments.Add(department3);
 
@@ -103,20 +97,42 @@ namespace TicketManager.Infrastructure.Seeders
                     System.Console.WriteLine("LabLocations data exist - no need to seed.");
                 }
 
+                // Seed ProductFamily db
+                if (!_dbContext.ProductFamilies.Any())
+                {
+                    var family1 = new ProductFamily()
+                    {
+                        FamilyDescription = "Motor"
+                    };
+                    _dbContext.ProductFamilies.Add(family1);
+
+                    var family2 = new ProductFamily()
+                    {
+                        FamilyDescription = "Steering"
+                    };
+                    _dbContext.ProductFamilies.Add(family2);
+
+                    await _dbContext.SaveChangesAsync();
+                }
+                else
+                {
+                    System.Console.WriteLine("ProductFamilies data exist - no need to seed.");
+                }
+
                 // Seed ProductDisplacements db
                 if (!_dbContext.ProductDisplacements.Any())
                 {
                     var displacement1 = new ProductDisplacement()
                     {
                         Displacement = 400,
-                        ProductId = 1
+                        ProductFamilyId = 1
                     };
                     _dbContext.ProductDisplacements.Add(displacement1);
 
                     var displacement2 = new ProductDisplacement()
                     {
                         Displacement = 30,
-                        ProductId = 2
+                        ProductFamilyId = 2
                     };
                     _dbContext.ProductDisplacements.Add(displacement2);
 
@@ -133,14 +149,14 @@ namespace TicketManager.Infrastructure.Seeders
                     var type1 = new ProductType()
                     {
                         ProductTypeDesc = "OMR",
-                        ProductId = 1
+                        ProductFamilyId = 1
                     };
                     _dbContext.ProductTypes.Add(type1);
 
                     var type2 = new ProductType()
                     {
                         ProductTypeDesc = "ON",
-                        ProductId = 2
+                        ProductFamilyId = 2
                     };
                     _dbContext.ProductTypes.Add(type2);
 
@@ -156,7 +172,7 @@ namespace TicketManager.Infrastructure.Seeders
                 {
                     var product1 = new Product()
                     {
-                        ProductFamilly = "Motor",
+                        ProductFamilyId = 1,
                         ProductTypeId = 1,
                         ProductDisplacementId = 1
                     };
@@ -164,7 +180,7 @@ namespace TicketManager.Infrastructure.Seeders
 
                     var product2 = new Product()
                     {
-                        ProductFamilly = "Steering",
+                        ProductFamilyId = 2,
                         ProductTypeId = 2,
                         ProductDisplacementId = 2
                     };
@@ -252,7 +268,7 @@ namespace TicketManager.Infrastructure.Seeders
                     var test1 = new Test()
                     {
                         TestDescription = "Leakage",
-                        TestUnits ="l/min",
+                        TestUnits = "l/min",
                         LabLocationId = 2
                     };
                     _dbContext.Tests.Add(test1);
@@ -272,6 +288,7 @@ namespace TicketManager.Infrastructure.Seeders
                         LabLocationId = 1
                     };
                     _dbContext.Tests.Add(test3);
+
 
                     var test4 = new Test()
                     {
@@ -324,7 +341,7 @@ namespace TicketManager.Infrastructure.Seeders
                         RequestorEmail = "req1@email.com",
                         ImplementedAt = DateTime.UtcNow,
                         StartedAt = DateTime.UtcNow,
-                        FinishedAt =DateTime.UtcNow,
+                        FinishedAt = DateTime.UtcNow,
                         DepartmentId = 1,
                         LabLocationId = 1,
                         ProductId = 1,
@@ -370,7 +387,6 @@ namespace TicketManager.Infrastructure.Seeders
                 {
                     var tickettest1 = new TicketTest()
                     {
-                        TestParameter = 5,
                         TestId = 1,
                         TicketId = 1
                     };
@@ -378,7 +394,6 @@ namespace TicketManager.Infrastructure.Seeders
 
                     var tickettest2 = new TicketTest()
                     {
-                        TestParameter = 10,
                         TestId = 2,
                         TicketId = 1
                     };
@@ -386,7 +401,6 @@ namespace TicketManager.Infrastructure.Seeders
 
                     var tickettest3 = new TicketTest()
                     {
-                        TestParameter = 30,
                         TestId = 2,
                         TicketId = 2
                     };
@@ -394,7 +408,6 @@ namespace TicketManager.Infrastructure.Seeders
 
                     var tickettest4 = new TicketTest()
                     {
-                        TestParameter = 2,
                         TestId = 1,
                         TicketId = 3
                     };
@@ -405,6 +418,90 @@ namespace TicketManager.Infrastructure.Seeders
                 else
                 {
                     System.Console.WriteLine("TicketTests data exist - no need to seed.");
+                }
+
+                // Seed TestParameter db
+                if (!_dbContext.TestParameters.Any())
+                {
+                    var testparam1 = new TestParameter()
+                    {
+                        ParameterDescription = "Flow",
+                        ParameterUnit = "L/min",
+                        TestId = 1,
+                    };
+                    _dbContext.TestParameters.Add(testparam1);
+
+                    var testparam2 = new TestParameter()
+                    {
+                        ParameterDescription = "Torque",
+                        ParameterUnit = "Nm",
+                        TestId = 1,
+                    };
+                    _dbContext.TestParameters.Add(testparam2);
+
+                    var testparam3 = new TestParameter()
+                    {
+                        ParameterDescription = "Pressure",
+                        ParameterUnit = "bar",
+                        TestId = 2,
+                    };
+                    _dbContext.TestParameters.Add(testparam3);
+
+                    var testparam4 = new TestParameter()
+                    {
+                        ParameterDescription = "Back Pressure",
+                        ParameterUnit = "bar",
+                        TestId = 1,
+                    };
+                    _dbContext.TestParameters.Add(testparam4);
+
+                    await _dbContext.SaveChangesAsync();
+                }
+                else
+                {
+                    System.Console.WriteLine("TestParameters data exist - no need to seed.");
+                }
+
+                // Seed TicketTestParameter db
+                if (!_dbContext.TicketTestParameters.Any())
+                {
+                    var tickettestparam1 = new TicketTestParameter()
+                    {
+                        ParameterValue = 12.00,
+                        TestParameterId = 1,
+                        TicketTestId = 1
+                    };
+                    _dbContext.TicketTestParameters.Add(tickettestparam1);
+
+                    var tickettestparam2 = new TicketTestParameter()
+                    {
+                        ParameterValue = 5.5,
+                        TestParameterId = 2,
+                        TicketTestId = 1
+                    };
+                    _dbContext.TicketTestParameters.Add(tickettestparam2);
+
+                    var tickettestparam3 = new TicketTestParameter()
+                    {
+                        ParameterValue = 65.50,
+                        TestParameterId = 3,
+                        TicketTestId = 2
+                    };
+                    _dbContext.TicketTestParameters.Add(tickettestparam3);
+
+                    var tickettestparam4 = new TicketTestParameter()
+                    {
+                        ParameterValue = 38.00,
+                        TestParameterId = 4,
+                        TicketTestId = 2
+                    };
+                    _dbContext.TicketTestParameters.Add(tickettestparam4);
+
+                    await _dbContext.SaveChangesAsync();
+                }
+                else
+                {
+                    System.Console.WriteLine("TicketTestParameters data exist - no need to seed.");
                 }
             }
         }

@@ -6,13 +6,13 @@ namespace TicketManager.Api.Controllers
     [ApiController]
     public class FactoryLocationController : Controller
     {
-
         private readonly IFactoryLocationService _factoryLocationService;
         public FactoryLocationController(IFactoryLocationService factoryLocationService)
         {
             _factoryLocationService = factoryLocationService;
         }
 
+        // GET
         [HttpGet("api/factorylocation")]
         public ActionResult GetAllFactoryLocations()
         {
@@ -20,6 +20,7 @@ namespace TicketManager.Api.Controllers
             return Ok(locations);
         }
 
+        // GET
         [HttpGet("api/factorylocation/{id}")]
         public ActionResult GetFactoryLocationById(int id)
         {
