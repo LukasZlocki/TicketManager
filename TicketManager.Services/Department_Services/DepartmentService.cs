@@ -13,7 +13,17 @@ namespace TicketManager.Services.Department_Services
         }
 
         /// <summary>
-        /// Returns list of departments object which are located in factory by factory id. 
+        /// Returns all departments in database
+        /// </summary>
+        /// <returns>List of Department objects</returns>
+        public List<Department> GetAllDepartments()
+        {
+            var service = _db.Departments.ToList();
+            return service;
+        }
+
+        /// <summary>
+        /// Returns list of departments object which are located in factory by factory primary key.
         /// </summary>
         /// <param name="factoryLocationId"></param>
         /// <returns>List of Department</returns>
@@ -26,7 +36,7 @@ namespace TicketManager.Services.Department_Services
         }
 
         /// <summary>
-        /// Returns department object by department id.
+        /// Returns department object by primary key.
         /// </summary>
         /// <param name="departmentId"></param>
         /// <returns>Department object</returns>

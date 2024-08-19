@@ -1,5 +1,6 @@
 ﻿using TicketManager.Infrastructure.Persistance;
 using TicketManager.Models.Models;
+using TicketManager.Services.ProductTypeServices;
 
 namespace TicketManager.Services.ProductType_Services
 {

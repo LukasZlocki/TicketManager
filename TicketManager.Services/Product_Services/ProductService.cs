@@ -1,5 +1,6 @@
 ﻿using TicketManager.Infrastructure.Persistance;
 using TicketManager.Models.Models;
+using TicketManager.Services.ProductServices;
 
 namespace TicketManager.Services.Product_Services
 {
@@ -12,15 +13,24 @@ namespace TicketManager.Services.Product_Services
             _db = db;
         }
 
-        public List<Product> GetAllProductFamilies()
+        /// <summary>
+        /// Returns all products
+        /// </summary>
+        /// <returns>List of Product objects</returns>
+        public List<Product> GetAllProducts()
         {
             var service = _db.Products.ToList();
             return service;
         }
 
-        public Product GetProductById(int priductId)
+        /// <summary>
+        /// Returns product by its primary key
+        /// </summary>
+        /// <param name="priductId"></param>
+        /// <returns></returns>
+        public Product GetProductById(int productId)
         {
-            var service = _db.Products.FirstOrDefault(id => id.ProductId == priductId);
+            var service = _db.Products.FirstOrDefault(id => id.ProductId == productId);
             return service ?? new Product();
         }
     }

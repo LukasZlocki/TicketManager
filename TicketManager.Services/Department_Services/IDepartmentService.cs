@@ -4,6 +4,7 @@ namespace TicketManager.Services.Department_Services
 {
     public interface IDepartmentService
     {
+        public List<Department> GetAllDepartments();
         public List<Department> GetAllDepartmentsByFactoryLocationId(int factoryLocationId);
         public Department GetDepartmentByDepartmentId(int departmentId);
     }

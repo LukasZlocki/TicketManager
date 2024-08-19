@@ -1,11 +1,10 @@
 ﻿using TicketManager.Models.Models;
 
-namespace TicketManager.Services.ReportType_Services
+namespace TicketManager.Services.ReportTypeServices
 {
     public interface IReportTypeService
     {
-        public List<ProductType> GetAllProductTypes();
-        public List<ProductType> GetAllProductTypesByFamilyId(int familyId);
-        public ProductType GetProductTypeById(int productTypeId);
+        List<ReportType> GetAllReportTypes();
+        ReportType GetReportTypeById(int reportTypeId);
     }
 }
