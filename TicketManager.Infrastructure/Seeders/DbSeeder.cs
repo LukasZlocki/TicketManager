@@ -14,6 +14,7 @@ namespace TicketManager.Infrastructure.Seeders
 
         public async Task Seed()
         {
+            /*
 
             // Seed TicketManager db
             if (await _dbContext.Database.CanConnectAsync())
@@ -503,7 +504,9 @@ namespace TicketManager.Infrastructure.Seeders
                 {
                     System.Console.WriteLine("TicketTestParameters data exist - no need to seed.");
                 }
+            
             }
+            */
         }
 
     }

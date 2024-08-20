@@ -10,5 +10,6 @@ namespace TicketManager.Models.Models
         public string? ParameterUnit { get; set; }
 
         public int TestId { get; set; }
+        public Test Test { get; set; } = null!;
     }
 }

@@ -22,7 +22,7 @@ namespace TicketManager.Services.TicketTest_Services
         public TicketTest GetTicketTestByTicketTestId(int ticketTestId)
         {
             var service = _db.TicketTests
-                .Include(t => t.Test)
+                .Include(t => t.TicketTestParameters)
                     .FirstOrDefault(id => id.TicketTestId == ticketTestId);
             return service ?? new TicketTest();
         }
@@ -36,7 +36,7 @@ namespace TicketManager.Services.TicketTest_Services
         public List<TicketTest> GetTicketTestsByTicketId(int ticketId)
         {
             var service = _db.TicketTests
-                .Include(t => t.Test)
+                .Include(t => t.TicketTestParameters)
                     .Where(id => id.TicketId == ticketId)
                         .ToList();
             return service;
@@ -51,12 +51,7 @@ namespace TicketManager.Services.TicketTest_Services
         {
             try
             {
-                TicketTest _ticketTest = new TicketTest { 
-                        TestId = ticketTest.TestId,
-                        TicketId = ticketTest.TicketId
-                    };
-
-                _db.TicketTests.Add(_ticketTest);
+                _db.TicketTests.Add(ticketTest);
                 
                 // Add
                 _db.SaveChanges();
@@ -65,7 +60,7 @@ namespace TicketManager.Services.TicketTest_Services
                     IsSucess = true,
                     Message = "TicketTest added.",
                     Time = DateTime.UtcNow,
-                    Data = _ticketTest
+                    Data = ticketTest
                 };
             }
             catch (Exception e)
