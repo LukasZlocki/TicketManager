@@ -36,5 +36,22 @@ namespace TicketManager.Infrastructure.Persistance
         }
         //*/
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // Configure the relationship between TicketTestParameter and TicketTest
+            modelBuilder.Entity<TicketTestParameter>()
+                .HasOne(p => p.TicketTest)
+                .WithMany(b => b.TicketTestParameters)
+                .HasForeignKey(p => p.TicketTestId)
+                .OnDelete(DeleteBehavior.NoAction); // Prevent cascade deletes
+
+            // Configure other relationships as needed
+            modelBuilder.Entity<TestParameter>()
+                .HasOne(tp => tp.Test)
+                .WithMany(t => t.TestParameters)
+                .HasForeignKey(tp => tp.TestId)
+                .OnDelete(DeleteBehavior.Restrict); // or .NoAction
+        }
+
     }
 }

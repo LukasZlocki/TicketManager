@@ -13,5 +13,8 @@ namespace TicketManager.Models.Models
 
         public int LabLocationId { get; set; }
         public LabLocation LabLocation { get; set; }
+
+        // Navigation property to TestParameters
+        public ICollection<TestParameter> TestParameters { get; set; } = new List<TestParameter>();
     }
 }
