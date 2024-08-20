@@ -2,8 +2,6 @@
 using TicketManager.Models.Models;
 using TicketManager.Services;
 using TicketManager.Services.Ticket_Services;
-using TicketManager.Services.TicketTest_Services;
-using TicketManager.Services.TicketTestParameter_Services;
 
 namespace TicketManager.Api.Controllers
 {
