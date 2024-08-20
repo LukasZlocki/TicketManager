@@ -7,6 +7,8 @@ namespace TicketManager.Models.Models
         [Key]
         public int ProductDisplacementId { get; set; }
         public int Displacement { get; set; }
+
         public int ProductFamilyId { get; set; }
+        public ProductFamily ProductFamily { get; set; } = null!;
     }
 }

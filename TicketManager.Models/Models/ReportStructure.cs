@@ -10,5 +10,6 @@ namespace TicketManager.Models.Models
         public string? FolderDescription { get; set; }
 
         public int ReportTypeId { get; set; }
+        public ReportType ReportType { get; set; } = null!;
     }
 }

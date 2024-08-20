@@ -12,5 +12,6 @@ namespace TicketManager.Models.Models
         public TestParameter? TestParameter { get; set; }
 
         public int TicketTestId { get; set; }
+        public TicketTest TicketTest { get; set; } = null!;
     }
 }
