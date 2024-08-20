@@ -5,6 +5,7 @@
 @inject HttpClient http
 @inject NavigationManager Navigation
 
+
 <!--
  Basic user data form
 -->
@@ -76,142 +77,7 @@
             }
         </select>
     </div>
-
-    <div class="form-group">
-        <label for="inputProductDisplacement">Product displacement</label>
-        <select id="inputProductDisplacement" class="form-control" asp-items @bind="UserTicketVM.Product.ProductDisplacementId">
-            <option selected>Choose product type...</option>
-            <option>...</option>
-            @foreach (var item in ProductDisplacementsDedicatedList)
-            {
-                <option value="@item.ProductDisplacementId">@item.Displacement</option>
-            }
-        </select>
-    </div>
-</form>
-
-<!--
- Test request form
--->
-<br>
-<br>
-<h3>Tests request:</h3>
-<br>
-<div class="border-bottom border-white shadow rounded-lg col-md-6" style="backgoround-color: #ededed">
-    <table class="table table-striped boarder table-hover">
-        <tr>
-            <th>Test Description</th>
-            <th>Units</th>
-        </tr>
-        <tbody>
-        <td>
-            <div class="form-group">
-                <select id="inputTest" class="form-control" asp-items @onchange="OnTestPickedChanged">
-                    <option selected>Choose test...</option>
-                    <option>...</option>
-                        @foreach (var test in TestsDedicatedList)
-                        {
-                        <option value="@test.TestId">@test.TestDescription</option>
-                        }
-                </select>
-            </div>
-        </td>
-        <td>
-            <div class="form-group">
-                <input type="text" class="form-control" id="formTestUnits" placeholder="@UserTicketTestVM.Test.TestUnits" readonly>
-            </div>
-        </td>
-        </tbody>
-    </table>
-</div>
-<br>
-
-<!--
- Parameters request form
--->
-<div class="border-bottom border-white shadow rounded-lg col-md-6" style="background-color: #ededed">
-    <table class="table table-striped boarder table-hover">
-        <tr>
-            <th>Parameter</th>
-            <th>Value</th>
-            <th>Units</th>
-        </tr>
-        <tbody>
-            @if (UserTicketTestVM.TicketTestParameters == null)
-            {
-                <p><em>No parameters added.</em></p>
-            }
-            else
-            {
-                @foreach (var test in UserTicketTestVM.TicketTestParameters)
-                {
-                    <tr>
-                        <td>@test.TestParameter.ParameterDescription</td>
-                        <td>
-                            <input type="text" class="form-control" id="formTestParameterValue" placeholder="Add parameter value" @bind="test.ParameterValue">
-                        </td>
-                        <td>@test.TestParameter.ParameterUnit</td>
-                    </tr>
-                }
-            }
-        </tbody>
-    </table>
-</div>
-<br>
-<div class="form-group">
-    <button class="btn btn-primary" @onclick="AddTestAndItsParametersToThisTicket">Add test and parameters</button>
-</div>
-
-<!--
- List with picked tests
--->
-<br>
-<br>
-<h3>Summary tests request:</h3>
-<br>
-<div class="border-bottom border-white shadow rounded-lg" style="background-color: #ededed">
-    <table class="table table-striped boarder table-hover">
-        <tr>
-            <th>Test Description</th>
-            <th>Units</th>
-            <th>Test parameter</th>
-            <th>Action</th>
-        </tr>
-        <tbody>
-            @if (UserTicketVM.TicketTests == null)
-            {
-                <p><em>No tests added.</em></p>
-            }
-            else
-                @foreach (var test in UserTicketVM.TicketTests)
-                {
-                    <tr>
-                        <td>@test.Test.TestDescription</td>
-                        <td>@test.Test.TestUnits</td>
-                        <td>
-                            @foreach (var parameter in test.TicketTestParameters)
-                            {
-                                <label for="summaryinfo">
-                                    @parameter.TestParameter.ParameterDescription
-                                    @parameter.ParameterValue
-                                    @parameter.TestParameter.ParameterUnit
-                                </label>
-                                <br>
-                            }
-                        </td>
-                        <td>
-                            <button class="btn-secondary btn-sm" @onclick="() => EditTestFromList(test.TestId)">Edit</button>
-                            <button class="btn-danger btn-sm" @onclick="() => RemoveTestFromList(test.TestId)">Delete</button>
-                        </td>
-                    </tr>
-                }
-        </tbody>
-    </table>
-    <div class="form-group">
-        <button class="btn btn-primary" @onclick="CreateTicketRequest">Create ticket</button>
-    </div>
-</div>
-
+    </form>
 
 
 @code {
@@ -227,7 +93,7 @@
     private TicketTest UserTicketTestVM = new TicketTest
         {
             TicketTestParameters = new List<TicketTestParameter>(),
-            Test = new()
+            Ticket = new()
         };
 
     List<LabLocation> LabolatoryLocationsList = new List<LabLocation>();
@@ -276,11 +142,13 @@
 
     private async Task OnProductTypeChanged(ChangeEventArgs e)
     {
+        /*
         if (int.TryParse(e.Value.ToString(), out int productTypeId))
         {
-            UserTicketVM.Product.ProductTypeId = productTypeId;
+            UserTicketVM.Product.ProductFamily.ProductType. = productTypeId;
             await LoadDedicatedProductDisplacements(UserTicketVM.Product.ProductTypeId);
         }
+        */
     }
 
     private async Task OnFactoryLocationChanged(ChangeEventArgs e)
@@ -305,7 +173,7 @@
 
     private async Task OnTestPickedChanged(ChangeEventArgs e)
     {
-
+        /*
         if (int.TryParse(e.Value.ToString(), out int testId))
         {
             // picked test chosen from list of dedicated tests by user
@@ -313,6 +181,7 @@
             UserTicketTestVM.TestId = testId;
             await LoadDedicatedTestParametersByTestId(testId);
         }
+        */
     }
 
     private async Task OnLabLocationChanged(ChangeEventArgs e)
@@ -326,6 +195,7 @@
 
     private void AddTestAndItsParametersToThisTicket()
     {
+        /*
         // check if test exist if exist update test in list
         if (UserTicketVM.TicketTests.Any(id => id.Test.TestId == UserTicketTestVM.Test.TestId))
         {
@@ -343,6 +213,7 @@
                 TicketTestParameters = new List<TicketTestParameter>(),
                 Test = new()
             };
+            */
     }
 
     /// <summary>
@@ -368,12 +239,16 @@
 
     private void RemoveTestFromList(int testId)
     {
+        /*
         UserTicketVM.TicketTests?.RemoveAll(id => id?.Test?.TestId == testId);
+        */
     }
 
     private void EditTestFromList(int testId)
     {
+        /*
         UserTicketTestVM = UserTicketVM?.TicketTests?.Find(id => id?.TestId == testId);
+        */
     }
 
     private async Task CreateTicketRequest()
