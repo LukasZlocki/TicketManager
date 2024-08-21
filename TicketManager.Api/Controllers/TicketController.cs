@@ -30,5 +30,20 @@ namespace TicketManager.Api.Controllers
                 return StatusCode(500, new { message = "An error occurred while saving newticket", error = ticketService.Message});
             }
         }
+
+        // POST
+        [HttpPost("api/ticketcreateefcore")]
+        public IActionResult CreateNewTicketEfCore([FromBody] Ticket ticket)
+        {
+            ResponseService<Ticket> ticketService = _ticketService.CreateTicketEfCore(ticket);
+            if (ticketService.IsSucess)
+            {
+                return Ok("All data saved to database");
+            }
+            else
+            {
+                return StatusCode(500, new { message = "An error occurred while saving newticket ef core good practise", error = ticketService.Message });
+            }
+        }
     }
 }
