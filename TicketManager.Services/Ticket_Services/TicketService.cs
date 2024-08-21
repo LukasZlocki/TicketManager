@@ -41,8 +41,30 @@ namespace TicketManager.Services.Ticket_Services
 
         public ResponseService<Ticket> CreateTicketEfCore(Ticket ticket)
         {
-            // ToDo : Code creating ticket service according to ef core good practise 
-            throw new NotImplementedException();
+            // Creating ticket service according to ef core good practise 
+            try
+            {
+                _db.Tickets.Add(ticket);
+                // Add
+                _db.SaveChanges();
+                return new ResponseService<Ticket>
+                {
+                    IsSucess = true,
+                    Message = "Order added.",
+                    Time = DateTime.UtcNow,
+                    Data = ticket
+                };
+            }
+            catch (Exception e)
+            {
+                return new ResponseService<Ticket>
+                {
+                    IsSucess = false,
+                    Message = e.StackTrace,
+                    Time = DateTime.UtcNow,
+                    Data = ticket
+                };
+            }
         }
     }
 }
