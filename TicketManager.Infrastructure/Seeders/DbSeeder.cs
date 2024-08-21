@@ -14,8 +14,6 @@ namespace TicketManager.Infrastructure.Seeders
 
         public async Task Seed()
         {
-            /*
-
             // Seed TicketManager db
             if (await _dbContext.Database.CanConnectAsync())
             {
@@ -174,16 +172,12 @@ namespace TicketManager.Infrastructure.Seeders
                     var product1 = new Product()
                     {
                         ProductFamilyId = 1,
-                        ProductTypeId = 1,
-                        ProductDisplacementId = 1
                     };
                     _dbContext.Products.Add(product1);
 
                     var product2 = new Product()
                     {
                         ProductFamilyId = 2,
-                        ProductTypeId = 2,
-                        ProductDisplacementId = 2
                     };
                     _dbContext.Products.Add(product2);
 
@@ -346,7 +340,7 @@ namespace TicketManager.Infrastructure.Seeders
                         DepartmentId = 1,
                         LabLocationId = 1,
                         ProductId = 1,
-                        StatusId = 3
+                        TicketStatusId = 3
                     };
                     _dbContext.Tickets.Add(ticket1);
 
@@ -359,7 +353,7 @@ namespace TicketManager.Infrastructure.Seeders
                         DepartmentId = 1,
                         LabLocationId = 1,
                         ProductId = 1,
-                        StatusId = 1
+                        TicketStatusId = 1
                     };
                     _dbContext.Tickets.Add(ticket2);
 
@@ -372,7 +366,7 @@ namespace TicketManager.Infrastructure.Seeders
                         DepartmentId = 1,
                         LabLocationId = 1,
                         ProductId = 1,
-                        StatusId = 2
+                        TicketStatusId = 2
                     };
                     _dbContext.Tickets.Add(ticket3);
 
@@ -388,28 +382,24 @@ namespace TicketManager.Infrastructure.Seeders
                 {
                     var tickettest1 = new TicketTest()
                     {
-                        TestId = 1,
                         TicketId = 1
                     };
                     _dbContext.TicketTests.Add(tickettest1);
 
                     var tickettest2 = new TicketTest()
                     {
-                        TestId = 2,
                         TicketId = 1
                     };
                     _dbContext.TicketTests.Add(tickettest2);
 
                     var tickettest3 = new TicketTest()
                     {
-                        TestId = 2,
                         TicketId = 2
                     };
                     _dbContext.TicketTests.Add(tickettest3);
 
                     var tickettest4 = new TicketTest()
                     {
-                        TestId = 1,
                         TicketId = 3
                     };
                     _dbContext.TicketTests.Add(tickettest4);
@@ -506,7 +496,7 @@ namespace TicketManager.Infrastructure.Seeders
                 }
             
             }
-            */
+
         }
 
     }
