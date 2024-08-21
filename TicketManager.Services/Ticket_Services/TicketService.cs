@@ -38,5 +38,11 @@ namespace TicketManager.Services.Ticket_Services
                 };
             }
         }
+
+        public ResponseService<Ticket> CreateTicketEfCore(Ticket ticket)
+        {
+            // ToDo : Code creating ticket service according to ef core good practise 
+            throw new NotImplementedException();
+        }
     }
 }
