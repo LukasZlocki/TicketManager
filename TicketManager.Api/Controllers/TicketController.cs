@@ -96,5 +96,51 @@ namespace TicketManager.Api.Controllers
 
             return Ok("All data saved to database");
         }
+
+        // DELETE
+        [HttpDelete("api/deleteticket/{id}")]
+        public IActionResult DeleteTicket(int Id)
+        {
+            var ticket = _ticketService.GetTicketDetails(Id);
+            if (ticket == null)
+            {
+                return StatusCode(500, new { message = "No ticket in database.", error = "no ticket in Db." });
+            }
+            else
+            {
+                // Delete ticket tests parameter list.
+                foreach (var ticketTest in ticket.TicketTests)
+                {
+                    foreach (var ticketTestParameter in ticketTest.TicketTestParameters)
+                    {
+                        var responseTicketTestParameter = _ticketTestParameterService
+                            .DeleteTicketTestParameter(ticketTestParameter.TicketTestParameterId);
+
+                        if (!responseTicketTestParameter.IsSucess)
+                        {
+                            return StatusCode(500, new { message = "An error occurred while deleting the ticket test parameter.", error = responseTicketTestParameter.Message });
+                        }
+                    }
+                }
+
+                // Delete ticket test list.
+                foreach (var ticketTest in ticket.TicketTests)
+                {
+                    var responseTicketTest = _ticketTestService.DeleteTicketTest(ticketTest.TicketTestId);
+                    if (!responseTicketTest.IsSucess)
+                    {
+                        return StatusCode(500, new { message = "An error occurred while deleting the ticket test.", error = responseTicketTest.Message });
+                    }
+                }
+                // ToDo : Delete ticket - write service
+                var responseTicket = _ticketService.DeleteTicket(ticket.TicketId);
+                if (!responseTicket.IsSucess)
+                {
+                    return StatusCode(500, new { message = "An error occurred while deleting the ticket.", error = responseTicket.Message });
+                }
+            }
+            return Ok("Ticket deleted from database");
+        }
+
     }
 }

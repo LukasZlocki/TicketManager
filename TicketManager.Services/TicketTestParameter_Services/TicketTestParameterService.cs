@@ -60,6 +60,46 @@ namespace TicketManager.Services.TicketTestParameter_Services
                 };
             }
         }
-        
+
+        public ResponseService<TicketTestParameter> DeleteTicketTestParameter(int ticketTestParameterId)
+        {
+            var ticketTestParameter = _db.TicketTestParameters.Find(ticketTestParameterId);
+            if (ticketTestParameter == null)
+            {
+                return new ResponseService<TicketTestParameter>
+                {
+                    IsSucess = false,
+                    Message = "No ticket test parameter found.",
+                    Time = DateTime.UtcNow,
+                    Data = ticketTestParameter
+                };
+            }
+
+            try
+            {
+                // Deleting process
+                _db.TicketTestParameters.Remove(ticketTestParameter);
+                // delete
+                _db.SaveChanges();
+                return new ResponseService<TicketTestParameter>
+                {
+                    IsSucess = true,
+                    Message = "TicketTestParameter deleted.",
+                    Time = DateTime.UtcNow,
+                    Data = ticketTestParameter
+                };
+            }
+            catch (Exception e)
+            {
+                return new ResponseService<TicketTestParameter>
+                {
+                    IsSucess = false,
+                    Message = e.StackTrace,
+                    Time = DateTime.UtcNow,
+                    Data = null
+                };
+            }
+        }
+
     }
 }
