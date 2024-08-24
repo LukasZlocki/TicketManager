@@ -79,5 +79,47 @@ namespace TicketManager.Services.TicketTest_Services
                 };
             }
         }
+
+        public ResponseService<TicketTest> DeleteTicketTest(int ticketTestId)
+        {
+
+            var ticketTest = _db.TicketTests.Find(ticketTestId);
+            if (ticketTest == null)
+            {
+                return new ResponseService<TicketTest>
+                {
+                    IsSucess = false,
+                    Message = "No ticket test found.",
+                    Time = DateTime.UtcNow,
+                    Data = ticketTest
+                };
+            }
+
+            try
+            {
+                // Deleting process
+                _db.TicketTests.Remove(ticketTest);
+                // delete
+                _db.SaveChanges();
+                return new ResponseService<TicketTest>
+                {
+                    IsSucess = true,
+                    Message = "TicketTest deleted.",
+                    Time = DateTime.UtcNow,
+                    Data = ticketTest
+                };
+            }
+            catch (Exception e)
+            {
+                return new ResponseService<TicketTest>
+                {
+                    IsSucess = false,
+                    Message = e.StackTrace,
+                    Time = DateTime.UtcNow,
+                    Data = null
+                };
+            }
+        }
+
     }
 }
