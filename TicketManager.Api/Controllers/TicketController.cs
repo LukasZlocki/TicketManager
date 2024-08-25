@@ -21,7 +21,7 @@ namespace TicketManager.Api.Controllers
         }
 
         // GET
-        [HttpPost("api/getticketbylablocation/{id}")]
+        [HttpGet("api/getticketbylablocation/{id}")]
         public IActionResult GetTicketsByLabLocation(int id)
         {
             var tickets = _ticketService.GetTicketsByLabLocation(id);
