@@ -28,6 +28,14 @@ namespace TicketManager.Api.Controllers
             return Ok(tickets);
         }
 
+        // GET
+        [HttpGet("api/getticketbyuser/{userEmail}")]
+        public IActionResult GetTicketsByUserEmail(string userEmail)
+        {
+            var tickets = _ticketService.GetTicketsByUserEmail(userEmail);
+            return Ok(tickets);
+        }
+
         // POST
         [HttpPost("api/ticketcreate")]
         public IActionResult CreateNewTicket([FromBody] Ticket ticket)
