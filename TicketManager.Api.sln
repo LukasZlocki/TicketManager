@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicketManager.Services", "T
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicketManager.Infrastructure", "TicketManager.Infrastructure\TicketManager.Infrastructure.csproj", "{F548B490-50A2-48B1-9956-EDA075B549EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketManager.Web", "TicketManager.Web\TicketManager.Web.csproj", "{553D4E01-F42B-4BDD-AD0A-26820CFF0D48}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicketManager.Web", "TicketManager.Web\TicketManager.Web.csproj", "{553D4E01-F42B-4BDD-AD0A-26820CFF0D48}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
