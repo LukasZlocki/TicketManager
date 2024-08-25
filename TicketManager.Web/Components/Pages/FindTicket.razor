@@ -49,7 +49,7 @@
             <th>Action</th>
         </tr>
         <tbody>
-            @if (UserTickets == null)
+            @if (UserTickets == null || UserTickets.Count == 0)
             {
                 <p><em>No tickets found.</em></p>
             }
