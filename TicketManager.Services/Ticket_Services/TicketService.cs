@@ -125,7 +125,19 @@ namespace TicketManager.Services.Ticket_Services
         public List<Ticket> GetTicketsByUserEmail(string userEmail)
         {
             var service = _db.Tickets
-                .Where(us => us.RequestorEmail == userEmail).ToList();
+                    .Include(t => t.TicketTests)
+                    .ThenInclude(t => t.TicketTestParameters)
+                        .ThenInclude(t => t.TestParameter)
+                .Include(t => t.RequestorDepartment)
+                    .ThenInclude(t => t.Factorylocation)
+                .Include(t => t.LabLocation)
+                .Include(t => t.Product)
+                    .Include(t => t.Product.ProductFamily)
+                    .Include(t => t.Product.ProductDisplacement)
+                    .Include(t => t.Product.ProductType)
+                .Include(t => t.TicketStatus)
+                .Where(e => e.RequestorEmail == userEmail)
+                .ToList();
             return service;
         }
     }
