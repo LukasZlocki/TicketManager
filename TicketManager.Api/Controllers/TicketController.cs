@@ -119,11 +119,16 @@ namespace TicketManager.Api.Controllers
                 // Delete ticket tests parameter list.
                 foreach (var ticketTest in ticket.TicketTests)
                 {
+                    // Gathering ticket test parameter ids to remove
+                    List<int> ticketTestParametersIdsToRemove = new List<int>();
                     foreach (var ticketTestParameter in ticketTest.TicketTestParameters)
                     {
-                        var responseTicketTestParameter = _ticketTestParameterService
-                            .DeleteTicketTestParameter(ticketTestParameter.TicketTestParameterId);
-
+                        ticketTestParametersIdsToRemove.Add(ticketTestParameter.TicketTestParameterId);
+                    }
+                    // Removing ticket test parameters
+                    foreach(var ticketTestParameterId in ticketTestParametersIdsToRemove)
+                    {
+                        var responseTicketTestParameter = _ticketTestParameterService.DeleteTicketTestParameter(ticketTestParameterId);
                         if (!responseTicketTestParameter.IsSucess)
                         {
                             return StatusCode(500, new { message = "An error occurred while deleting the ticket test parameter.", error = responseTicketTestParameter.Message });
@@ -132,15 +137,23 @@ namespace TicketManager.Api.Controllers
                 }
 
                 // Delete ticket test list.
+                List<int> ticketTestsIdsToRemove = new List<int>();
                 foreach (var ticketTest in ticket.TicketTests)
                 {
-                    var responseTicketTest = _ticketTestService.DeleteTicketTest(ticketTest.TicketTestId);
+                    ticketTestsIdsToRemove.Add(ticketTest.TicketTestId);
+
+                }
+
+                foreach (int ticketTestId in ticketTestsIdsToRemove)
+                {
+                    var responseTicketTest = _ticketTestService.DeleteTicketTest(ticketTestId);
                     if (!responseTicketTest.IsSucess)
                     {
                         return StatusCode(500, new { message = "An error occurred while deleting the ticket test.", error = responseTicketTest.Message });
                     }
                 }
-                // ToDo : Delete ticket - write service
+
+                // Delete ticket - write service
                 var responseTicket = _ticketService.DeleteTicket(ticket.TicketId);
                 if (!responseTicket.IsSucess)
                 {
