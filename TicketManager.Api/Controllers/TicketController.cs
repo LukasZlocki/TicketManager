@@ -20,6 +20,14 @@ namespace TicketManager.Api.Controllers
             _ticketTestParameterService = ticketTestParameterService;
         }
 
+        // GET
+        [HttpPost("api/getticketbylablocation/{id}")]
+        public IActionResult GetTicketsByLabLocation(int id)
+        {
+            var tickets = _ticketService.GetTicketsByLabLocation(id);
+            return Ok(tickets);
+        }
+
         // POST
         [HttpPost("api/ticketcreate")]
         public IActionResult CreateNewTicket([FromBody] Ticket ticket)
