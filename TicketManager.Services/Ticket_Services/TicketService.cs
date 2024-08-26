@@ -92,6 +92,8 @@ namespace TicketManager.Services.Ticket_Services
                 .Include(t => t.TicketTests)
                     .ThenInclude(t => t.TicketTestParameters)
                         .ThenInclude(t => t.TestParameter)
+                    .Include(t => t.TicketTests)
+                    .ThenInclude(t => t.Test)
                 .Include(t => t.RequestorDepartment)
                     .ThenInclude(t => t.Factorylocation)
                 .Include(t => t.LabLocation)
