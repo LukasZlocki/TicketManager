@@ -1,5 +1,49 @@
-﻿<h3>UpdateTicket</h3>
+﻿@page "/updateticket"
+
+@using TicketManager.Models.Models
+
+@inject HttpClient http
+@inject NavigationManager Navigation
+
+
+<h3>UpdateTicket</h3>
+
+
+<form>
+    <div class="form-group">
+        <label for="lblLabolatoryLocation">Lab location: @UserTicketVM.LabLocation.Factory / @UserTicketVM.LabLocation.Country </label>
+    </div>
+    <div class="form-group">
+        <label for="lblRequestorEmail">Requestor email: @UserTicketVM.RequestorEmail</label>
+    </div>
+    <div class="form-group">
+        <label for="lblRequestorDepartment">Requestor department: @UserTicketVM.RequestorDepartment.DepartmentDescription   </label>
+    </div>
+    <div class="form-group">
+        <label for="lblproduct">
+            Product:
+            @UserTicketVM.Product.ProductFamily.FamilyDescription
+            @UserTicketVM.Product.ProductType.ProductTypeDesc
+            @UserTicketVM.Product.ProductDisplacement.Displacement
+        </label>
+    </div>
+</form>
 
 @code {
+    private int ticketId = 1;
+
+    private Ticket UserTicketVM = new Ticket
+        {
+            TicketTests = new List<TicketTest>(),
+            RequestorDepartment = new(),
+            LabLocation = new(),
+            Product = new(),
+            TicketStatus = new()
+        };
+
+    protected override async Task OnInitializedAsync()
+    {
+        UserTicketVM = await http.GetFromJsonAsync<Ticket>("https://localhost:7259/api/api/ticketdetailsbyid/" + ticketId) ?? new Ticket(); ;
+    }
 
 }
