@@ -36,6 +36,22 @@ namespace TicketManager.Api.Controllers
             return Ok(tickets);
         }
 
+        // GET
+        [HttpGet("api/getticket/{id}")]
+        public IActionResult GetTicketsByUserEmail(int id)
+        {
+            var ticket = _ticketService.GetTicket(id);
+            return Ok(ticket);
+        }
+
+        // GET
+        [HttpGet("api/getticketdetails/{id}")]
+        public IActionResult GetTicketDetails(int id)
+        {
+            var ticket = _ticketService.GetTicketDetails(id);
+            return Ok(ticket);
+        }
+
         // POST
         [HttpPost("api/ticketcreate")]
         public IActionResult CreateNewTicket([FromBody] Ticket ticket)
