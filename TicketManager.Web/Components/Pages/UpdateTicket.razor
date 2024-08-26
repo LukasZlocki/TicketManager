@@ -33,7 +33,7 @@
     private int ticketId = 1; // 1 for loading first default ticket from db 
 
     private Ticket UserTicketVM = new Ticket
-        {
+            {
             TicketTests = new List<TicketTest>(),
             RequestorDepartment = new(),
             LabLocation = new(),
@@ -43,7 +43,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        UserTicketVM = await http.GetFromJsonAsync<Ticket>("https://localhost:7259/api/api/ticketdetailsbyid/" + ticketId) ?? new Ticket(); ;
+
+            UserTicketVM = await http.GetFromJsonAsync<Ticket>("https://localhost:7259/api/getticketdetails/" + ticketId) ?? new Ticket();
     }
 
 }
