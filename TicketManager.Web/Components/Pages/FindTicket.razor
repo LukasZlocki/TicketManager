@@ -125,7 +125,8 @@
 
     private void EditTicket(int ticketId)
     {
-        Navigation.NavigateTo("/updateticket", true);
+        Navigation.NavigateTo("/updateticket/" + ticketId, true);
+
     }
 
     private async Task DeleteTicket(int ticketId)
