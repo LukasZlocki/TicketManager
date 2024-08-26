@@ -1,4 +1,4 @@
-﻿@page "/updateticket"
+﻿@page "/updateticket/{id:int}"
 
 @using TicketManager.Models.Models
 
@@ -30,7 +30,10 @@
 </form>
 
 @code {
-    private int ticketId = 1; // 1 for loading first default ticket from db 
+
+    [Parameter]
+    public int Id { get; set; } // ticket primary key
+
 
     private Ticket? UserTicketVM = new Ticket
             {
@@ -51,7 +54,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-            UserTicketVM = await http.GetFromJsonAsync<Ticket>("https://localhost:7259/api/getticketdetails/" + ticketId) ?? new Ticket();
+            UserTicketVM = await http.GetFromJsonAsync<Ticket>("https://localhost:7259/api/getticketdetails/" + Id) ?? new Ticket();
     }
 
 }
