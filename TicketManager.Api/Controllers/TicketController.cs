@@ -164,7 +164,7 @@ namespace TicketManager.Api.Controllers
                     ResponseService<TicketTestParameter> ticketTestParameterService = _ticketTestParameterService.UpdateTicketTestParameter(ticketTestParameter);
                     if (ticketTestParameterService.IsSucess)
                     {
-                        // Do Nothing (?)
+                        return Ok("All data saved to database");
                     }
                     else
                     {
