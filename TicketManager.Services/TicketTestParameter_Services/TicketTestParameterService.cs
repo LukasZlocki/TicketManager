@@ -113,7 +113,7 @@ namespace TicketManager.Services.TicketTestParameter_Services
                     existingTicketTestParameter.TicketTestParameterId = ticketTestParameter.TicketTestParameterId;
                     existingTicketTestParameter.ParameterValue = ticketTestParameter.ParameterValue;
                     existingTicketTestParameter.TestParameterId = ticketTestParameter.TestParameterId;
-                    existingTicketTestParameter.TicketTestId = ticketTestParameter.TicketTestParameterId;
+                    existingTicketTestParameter.TicketTestId = ticketTestParameter.TicketTestId;
                     _db.Update(existingTicketTestParameter);
                     _db.SaveChanges();
                     return new ResponseService<TicketTestParameter>
