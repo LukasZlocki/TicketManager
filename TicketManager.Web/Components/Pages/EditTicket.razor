@@ -3,6 +3,7 @@
 @using TicketManager.Models.Models
 
 @inject HttpClient http
+@inject NavigationManager Navigation
 
 <h3>EditTicket</h3>
 
@@ -335,15 +336,12 @@
     // BUTTON
     private async Task UpdateTicketRequest()
     {
-        // ToDo : Code sending updatedticket to proper endpoint
-        /*
-         * reuse it but change endpoint
-        var response = await http.PostAsJsonAsync<Ticket>($"https://localhost:7259/api/ticketcreate", UserTicketVM);
+        // sending updatedticket to proper endpoint
+        var response = await http.PostAsJsonAsync<Ticket>($"https://localhost:7259/api/ticketupdate", UserTicketVM);
         if (response.IsSuccessStatusCode)
         {
             Navigation.NavigateTo("/", true);
         }
-        */
     }
 
 }
