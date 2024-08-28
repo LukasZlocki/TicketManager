@@ -156,10 +156,25 @@ namespace TicketManager.Api.Controllers
             }
             // ToDo: Code update / create ticket test parameters to database
             // start coding here !!
-
-            return Ok();
+            int _ticketTestCounter2 = 0;
+            foreach (var ticketTest in ticket.TicketTests)
+            {
+                foreach (var ticketTestParameter in ticketTest.TicketTestParameters)
+                {
+                    ResponseService<TicketTestParameter> ticketTestParameterService = _ticketTestParameterService.UpdateTicketTestParameter(ticketTestParameter);
+                    if (ticketTestParameterService.IsSucess)
+                    {
+                        // Do Nothing (?)
+                    }
+                    else
+                    {
+                        return StatusCode(500, new { message = "An error occurred while saving the ticket test parameter", error = ticketTestParameterService.Message });
+                    }
+                }
+                _ticketTestCounter2++;
+            }
+            return Ok("All data saved to database");
         }
-
 
         // DELETE
         [HttpDelete("api/deleteticket/{id}")]
