@@ -129,6 +129,38 @@ namespace TicketManager.Api.Controllers
             return Ok("All data saved to database");
         }
 
+        // PATCH
+        [HttpPatch("api/ticketupdate")]
+        public IActionResult UpdateTicket([FromBody] Ticket ticket)
+        {
+            // ToDo: Code update / create ticket tests lits
+            int _ticketTestCounter = 0;
+            foreach (var ticketTest in ticket.TicketTests)
+            {
+                ResponseService<TicketTest> ticketTestService = _ticketTestService.UpdateTicketTest(ticketTest);
+                if (ticketTestService.IsSucess)
+                {
+                    ticket.TicketTests[_ticketTestCounter].TicketTestId = ticketTestService.Data.TicketTestId;
+                    foreach (var _ticketTestParameter in ticketTest.TicketTestParameters)
+                    {
+                        // add ticket test id to each ticket test parameter
+                        _ticketTestParameter.TicketTestId = ticket.TicketTests[_ticketTestCounter].TicketTestId;
+                    }
+
+                }
+                else
+                {
+                    return StatusCode(500, new { message = "An error occurred while saving the ticket test", error = ticketTestService.Message });
+                }
+                _ticketTestCounter++;
+            }
+            // ToDo: Code update / create ticket test parameters to database
+            // start coding here !!
+
+            return Ok();
+        }
+
+
         // DELETE
         [HttpDelete("api/deleteticket/{id}")]
         public IActionResult DeleteTicket(int Id)
