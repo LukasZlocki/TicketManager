@@ -337,7 +337,7 @@
     private async Task UpdateTicketRequest()
     {
         // sending updatedticket to proper endpoint
-        var response = await http.PostAsJsonAsync<Ticket>($"https://localhost:7259/api/ticketupdate", UserTicketVM);
+        var response = await http.PatchAsJsonAsync<Ticket>($"https://localhost:7259/api/ticketupdate", UserTicketVM);
         if (response.IsSuccessStatusCode)
         {
             Navigation.NavigateTo("/", true);
