@@ -51,13 +51,14 @@ namespace TicketManager.Services.TicketTest_Services
         {
             try
             {
-                TicketTest _ticketTest = new TicketTest { 
-                        TestId = ticketTest.TestId,
-                        TicketId = ticketTest.TicketId
-                    };
+                TicketTest _ticketTest = new TicketTest
+                {
+                    TestId = ticketTest.TestId,
+                    TicketId = ticketTest.TicketId
+                };
 
                 _db.TicketTests.Add(_ticketTest);
-                
+
                 // Add
                 _db.SaveChanges();
                 return new ResponseService<TicketTest>
@@ -82,7 +83,6 @@ namespace TicketManager.Services.TicketTest_Services
 
         public ResponseService<TicketTest> DeleteTicketTest(int ticketTestId)
         {
-
             var ticketTest = _db.TicketTests.Find(ticketTestId);
             if (ticketTest == null)
             {
@@ -160,11 +160,11 @@ namespace TicketManager.Services.TicketTest_Services
             // ticket test does not exist - create ticket test
             else
             {
+                // 
                 var createTicketTestResponse = CreateTicketTests(ticketTest);
                 return createTicketTestResponse;
             }
         }
-
 
     }
 }
