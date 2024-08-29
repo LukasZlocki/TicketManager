@@ -21,27 +21,61 @@ namespace TicketManager.Api.Controllers
         }
 
         // GET
+        [HttpGet("api/ticketbyid/{id}")]
+        public ActionResult GetTicketById(int id)
+        {
+            var ticket = _ticketService.GetTicket(id);
+            return Ok(ticket);
+        }
+
+        // GET
+        [HttpGet("api/ticketdetailsbyid/{id}")]
+        public ActionResult GetTicketDetailsById(int id)
+        {
+            var ticketDetailed = _ticketService.GetTicketDetails(id);
+            return Ok(ticketDetailed);
+        }
+
+        // GET
         [HttpGet("api/getticketbylablocation/{id}")]
-        public IActionResult GetTicketsByLabLocation(int id)
+        public IActionResult GetTicketByLabLocationId(int id)
         {
             var tickets = _ticketService.GetTicketsByLabLocation(id);
             return Ok(tickets);
         }
 
         // GET
-        [HttpGet("api/getticketbyuser/{userEmail}")]
-        public IActionResult GetTicketsByUserEmail(string userEmail)
+        [HttpGet("api/getticketbyuseremail/{email}")]
+        public IActionResult GetTicketByLabLocationId(string email)
         {
-            var tickets = _ticketService.GetTicketsByUserEmail(userEmail);
+            var tickets = _ticketService.GetTicketsByUserEmail(email);
             return Ok(tickets);
         }
+
+        // GET
+        [HttpGet("api/getticket/{id}")]
+        public IActionResult GetTicketsByUserEmail(int id)
+        {
+            var ticket = _ticketService.GetTicket(id);
+            return Ok(ticket);
+        }
+
+        // GET
+        [HttpGet("api/getticketdetails/{id}")]
+        public IActionResult GetTicketDetails(int id)
+        {
+            var ticket = _ticketService.GetTicketDetails(id);
+            return Ok(ticket);
+        }
+
 
         // POST
         [HttpPost("api/ticketcreate")]
         public IActionResult CreateNewTicket([FromBody] Ticket ticket)
         {
             // step1: create ticket - get ticket id
-            Ticket _ticket = new Ticket { 
+            Ticket _ticket = new Ticket
+            {
                 RequestorEmail = ticket.RequestorEmail,
                 ImplementedAt = ticket.ImplementedAt,
                 StartedAt = ticket.StartedAt,
@@ -64,13 +98,13 @@ namespace TicketManager.Api.Controllers
             }
             else
             {
-                return StatusCode(500, new { message = "An error occurred while saving the ticket", error = ticketService.Message});
+                return StatusCode(500, new { message = "An error occurred while saving the ticket", error = ticketService.Message });
             }
 
             // step3: save tickettest -get tickettest id
             // save each tickettest to database one by one. retrive tickettest id.
             int _ticketTestCounter = 0;
-            foreach(var ticketTest in ticket.TicketTests)
+            foreach (var ticketTest in ticket.TicketTests)
             {
                 ResponseService<TicketTest> ticketTestService = _ticketTestService.CreateTicketTests(ticketTest);
                 if (ticketTestService.IsSucess)
@@ -81,7 +115,7 @@ namespace TicketManager.Api.Controllers
                         // add ticket test id to each ticket test parameter
                         _ticketTestParameter.TicketTestId = ticket.TicketTests[_ticketTestCounter].TicketTestId;
                     }
-    
+
                 }
                 else
                 {
@@ -93,9 +127,9 @@ namespace TicketManager.Api.Controllers
             // ToDo: Code saving ticket test parameters to database
             //var ticketTestParameter = ticket;
             int _ticketTestCounter2 = 0;
-            foreach (var ticketTest in ticket.TicketTests) 
+            foreach (var ticketTest in ticket.TicketTests)
             {
-                foreach (var ticketTestParameter in ticketTest.TicketTestParameters) 
+                foreach (var ticketTestParameter in ticketTest.TicketTestParameters)
                 {
                     ResponseService<TicketTestParameter> ticketTestParameterService = _ticketTestParameterService.CreateTicketTestParameter(ticketTestParameter);
                     if (ticketTestParameterService.IsSucess)
@@ -112,6 +146,52 @@ namespace TicketManager.Api.Controllers
 
             return Ok("All data saved to database");
         }
+
+        // PATCH
+        [HttpPatch("api/ticketupdate")]
+        public IActionResult UpdateTicket([FromBody] Ticket ticket)
+        {
+            // ToDo: Code update / create ticket tests lits
+            int _ticketTestCounter = 0;
+            foreach (var ticketTest in ticket.TicketTests)
+            {
+                ResponseService<TicketTest> ticketTestService = _ticketTestService.UpdateTicketTest(ticketTest);
+                if (ticketTestService.IsSucess)
+                {
+                    ticket.TicketTests[_ticketTestCounter].TicketTestId = ticketTestService.Data.TicketTestId;
+                    foreach (var _ticketTestParameter in ticketTest.TicketTestParameters)
+                    {
+                        // add ticket test id to each ticket test parameter
+                        _ticketTestParameter.TicketTestId = ticket.TicketTests[_ticketTestCounter].TicketTestId;
+                    }
+
+                }
+                else
+                {
+                    return StatusCode(500, new { message = "An error occurred while saving the ticket test", error = ticketTestService.Message });
+                }
+                _ticketTestCounter++;
+            }
+            // ToDo: Code update / create ticket test parameters to database
+            // start coding here !!
+            foreach (var ticketTest in ticket.TicketTests)
+            {
+                foreach (var ticketTestParameter in ticketTest.TicketTestParameters)
+                {
+                    ResponseService<TicketTestParameter> ticketTestParameterService = _ticketTestParameterService.UpdateTicketTestParameter(ticketTestParameter);
+                    if (ticketTestParameterService.IsSucess)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        return StatusCode(500, new { message = "An error occurred while saving the ticket test parameter", error = ticketTestParameterService.Message });
+                    }
+                }
+            }
+            return Ok("All data saved to database");
+        }
+
 
         // DELETE
         [HttpDelete("api/deleteticket/{id}")]
@@ -134,7 +214,7 @@ namespace TicketManager.Api.Controllers
                         ticketTestParametersIdsToRemove.Add(ticketTestParameter.TicketTestParameterId);
                     }
                     // Removing ticket test parameters
-                    foreach(var ticketTestParameterId in ticketTestParametersIdsToRemove)
+                    foreach (var ticketTestParameterId in ticketTestParametersIdsToRemove)
                     {
                         var responseTicketTestParameter = _ticketTestParameterService.DeleteTicketTestParameter(ticketTestParameterId);
                         if (!responseTicketTestParameter.IsSucess)

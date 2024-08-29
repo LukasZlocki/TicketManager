@@ -32,7 +32,7 @@ namespace TicketManager.Services.TicketTestParameter_Services
             {
                 TicketTestParameter _ticketTestParameter = new TicketTestParameter
                 {
-                    ParameterValue = ticketTestParameter.ParameterValue,   
+                    ParameterValue = ticketTestParameter.ParameterValue,
                     TestParameterId = ticketTestParameter.TestParameterId,
                     TicketTestId = ticketTestParameter.TicketTestId
                 };
@@ -98,6 +98,48 @@ namespace TicketManager.Services.TicketTestParameter_Services
                     Time = DateTime.UtcNow,
                     Data = null
                 };
+            }
+
+        }
+
+        public ResponseService<TicketTestParameter> UpdateTicketTestParameter(TicketTestParameter ticketTestParameter)
+        {
+            // Updating ticket test parameter BUT if not found ticket test parameter to be created
+            var existingTicketTestParameter = _db.TicketTestParameters.Find(ticketTestParameter.TicketTestParameterId);
+            if (existingTicketTestParameter != null)
+            {
+                try
+                {
+                    existingTicketTestParameter.TicketTestParameterId = ticketTestParameter.TicketTestParameterId;
+                    existingTicketTestParameter.ParameterValue = ticketTestParameter.ParameterValue;
+                    existingTicketTestParameter.TestParameterId = ticketTestParameter.TestParameterId;
+                    existingTicketTestParameter.TicketTestId = ticketTestParameter.TicketTestId;
+                    _db.Update(existingTicketTestParameter);
+                    _db.SaveChanges();
+                    return new ResponseService<TicketTestParameter>
+                    {
+                        IsSucess = true,
+                        Message = "TicketTestParameter updated.",
+                        Time = DateTime.UtcNow,
+                        Data = ticketTestParameter
+                    };
+                }
+                catch (Exception e)
+                {
+                    return new ResponseService<TicketTestParameter>
+                    {
+                        IsSucess = false,
+                        Message = e.StackTrace,
+                        Time = DateTime.UtcNow,
+                        Data = null
+                    };
+                }
+            }
+            else
+            {
+                // ticket test parameter does not exist - create ticket test parameter
+                var createTicketTestParameterResponse = CreateTicketTestParameter(ticketTestParameter);
+                return createTicketTestParameterResponse;
             }
         }
 
