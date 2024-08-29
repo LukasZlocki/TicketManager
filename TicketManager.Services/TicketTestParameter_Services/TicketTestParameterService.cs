@@ -1,5 +1,4 @@
-﻿using System.Net.Sockets;
-using TicketManager.Infrastructure.Persistance;
+﻿using TicketManager.Infrastructure.Persistance;
 using TicketManager.Models.Models;
 
 namespace TicketManager.Services.TicketTestParameter_Services
@@ -33,7 +32,7 @@ namespace TicketManager.Services.TicketTestParameter_Services
             {
                 TicketTestParameter _ticketTestParameter = new TicketTestParameter
                 {
-                    ParameterValue = ticketTestParameter.ParameterValue,   
+                    ParameterValue = ticketTestParameter.ParameterValue,
                     TestParameterId = ticketTestParameter.TestParameterId,
                     TicketTestId = ticketTestParameter.TicketTestId
                 };
@@ -100,6 +99,7 @@ namespace TicketManager.Services.TicketTestParameter_Services
                     Data = null
                 };
             }
+
         }
 
         public ResponseService<TicketTestParameter> UpdateTicketTestParameter(TicketTestParameter ticketTestParameter)
@@ -142,5 +142,6 @@ namespace TicketManager.Services.TicketTestParameter_Services
                 return createTicketTestParameterResponse;
             }
         }
+
     }
 }
