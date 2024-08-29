@@ -287,11 +287,14 @@
         if (UserTicketVM.TicketTests.Any(id => id.Test.TestId == UserTicketTestVM.Test.TestId))
         {
             int index = UserTicketVM.TicketTests.FindIndex(id => id.Test.TestId == UserTicketTestVM.Test.TestId);
+            // ToDo : Code update parameter value only
             UserTicketVM.TicketTests[index] = UserTicketTestVM;
         }
         // test does not exist. add new test to list
         else
         {
+            // need to add ticked id - during editing ticked id is known
+            UserTicketTestVM.TicketId = UserTicketVM.TicketId;
             UserTicketVM.TicketTests.Add(UserTicketTestVM);
         }
         // reseting user ticket to reset adding test and its parameters value
