@@ -92,6 +92,8 @@ namespace TicketManager.Services.Ticket_Services
                 .Include(t => t.TicketTests)
                     .ThenInclude(t => t.TicketTestParameters)
                         .ThenInclude(t => t.TestParameter)
+                    .Include(t => t.TicketTests)
+                    .ThenInclude(t => t.Test)
                 .Include(t => t.RequestorDepartment)
                     .ThenInclude(t => t.Factorylocation)
                 .Include(t => t.LabLocation)
@@ -107,9 +109,11 @@ namespace TicketManager.Services.Ticket_Services
         public List<Ticket> GetTicketsByLabLocation(int labLocationId)
         {
             var service = _db.Tickets
-                    .Include(t => t.TicketTests)
+                .Include(t => t.TicketTests)
                     .ThenInclude(t => t.TicketTestParameters)
                         .ThenInclude(t => t.TestParameter)
+                    .Include(t => t.TicketTests)
+                    .ThenInclude(t => t.Test)
                 .Include(t => t.RequestorDepartment)
                     .ThenInclude(t => t.Factorylocation)
                 .Include(t => t.LabLocation)
@@ -125,9 +129,11 @@ namespace TicketManager.Services.Ticket_Services
         public List<Ticket> GetTicketsByUserEmail(string userEmail)
         {
             var service = _db.Tickets
-                    .Include(t => t.TicketTests)
+                .Include(t => t.TicketTests)
                     .ThenInclude(t => t.TicketTestParameters)
                         .ThenInclude(t => t.TestParameter)
+                    .Include(t => t.TicketTests)
+                    .ThenInclude(t => t.Test)
                 .Include(t => t.RequestorDepartment)
                     .ThenInclude(t => t.Factorylocation)
                 .Include(t => t.LabLocation)
