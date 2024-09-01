@@ -20,6 +20,7 @@ using TicketManager.Services.TestParameter_Services;
 using TicketManager.Services.TicketTest_Services;
 using TicketManager.Services.Ticket_Services;
 using TicketManager.Services.TicketTestParameter_Services;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,13 +31,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddAuthorization();
+
+builder.Services.AddIdentityApiEndpoints<IdentityUser>()
+    .AddEntityFrameworkStores<TicketManagerDbContext>();
 
 // Register DbContext
 builder.Services.AddDbContext<TicketManagerDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("TicketManagerConnectionString")));
-
-//builder.Services.AddDbContext<TicketManagerDbContext>(options => 
-    //options.UseSqlServer("name=DefaultConnection"));
 
 // Register seeder
 builder.Services.AddScoped<DbSeeder>();
@@ -75,5 +77,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapGroup("/identity").MapIdentityApi<IdentityUser>();
 
 app.Run();
