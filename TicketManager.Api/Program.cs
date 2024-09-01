@@ -30,14 +30,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-/* temporary switch off authentication to read endpoints from frontend
-builder.Services.AddAuthentication(NegotiateDefaults.AuthenticationScheme)
-   .AddNegotiate();
-*/
 
 // Register DbContext
 builder.Services.AddDbContext<TicketManagerDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("TicketManagerConnectionString")));
+options.UseSqlServer(builder.Configuration.GetConnectionString("TicketManagerConnectionString")));
+
+//builder.Services.AddDbContext<TicketManagerDbContext>(options => 
+    //options.UseSqlServer("name=DefaultConnection"));
 
 // Register seeder
 builder.Services.AddScoped<DbSeeder>();
@@ -56,14 +55,6 @@ builder.Services.AddTransient<ITestService, TestService>();
 builder.Services.AddTransient<ITestParameterServices, TestParameterServices>();
 builder.Services.AddTransient<ITicketService, TicketService>();
 builder.Services.AddTransient<ITicketTestParameterService, TicketTestParameterService>();
-
-/* temporary switch off authentication to read endpoints from frontend
-builder.Services.AddAuthorization(options =>
-{
-    // By default, all incoming requests will be authorized according to the default policy.
-    options.FallbackPolicy = options.DefaultPolicy;
-});
-*/
 
 var app = builder.Build();
 

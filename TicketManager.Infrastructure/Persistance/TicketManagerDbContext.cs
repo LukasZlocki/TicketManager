@@ -1,16 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using TicketManager.Models.Models;
 
 namespace TicketManager.Infrastructure.Persistance
 {
-    public class TicketManagerDbContext : DbContext
+    public class TicketManagerDbContext : IdentityDbContext
     {
-        ///*
-        public TicketManagerDbContext(DbContextOptions<TicketManagerDbContext> options) : base(options)
+        public TicketManagerDbContext(DbContextOptions options) : base(options)
         {
 
         }
-        //*/
 
         public DbSet<Department> Departments { get; set; }
         public DbSet<FactoryLocation> FactoryLocations { get; set; }
