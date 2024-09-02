@@ -158,13 +158,13 @@ else
                 <th>Units</th>
             </tr>
             <tbody>
-                @if (UserTicketTestVM.TicketTestParameters == null)
+                @if (UserTicketVM.TicketTests[lastRecordPossitionCounter].TicketTestParameters == null)
                 {
                     <p><em>No parameters added.</em></p>
                 }
                 else
                 {
-                    @foreach (var test in UserTicketTestVM.TicketTestParameters)
+                    @foreach (var test in UserTicketVM.TicketTests[lastRecordPossitionCounter].TicketTestParameters)
                     {
                         <tr>
                             <td>@test.TestParameter.ParameterDescription</td>
@@ -428,7 +428,7 @@ else
             };
 
         UserTicketVM.TicketTests.Add(emptyUserTicketTestVM);
-        lastRecordPossitionCounter = UserTicketVM.TicketTests.Count;
+        lastRecordPossitionCounter = UserTicketVM.TicketTests.Count - 1;
 
         return lastRecordPossitionCounter;
     }
