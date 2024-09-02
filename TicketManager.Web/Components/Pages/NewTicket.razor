@@ -52,6 +52,11 @@
         </select>
     </div>
 
+
+    <!--
+     Basic product data form
+    -->
+
     <div class="form-group">
         <label for="inputProductFamily">Product family</label>
         <select id="inputProductFamily" class="form-control" asp-items @onchange="OnProductFamilyChanged">
@@ -97,70 +102,87 @@
 <br>
 <h3>Tests request:</h3>
 <br>
-<div class="border-bottom border-white shadow rounded-lg col-md-6" style="backgoround-color: #ededed">
-    <table class="table table-striped boarder table-hover">
-        <tr>
-            <th>Test Description</th>
-            <th>Units</th>
-        </tr>
-        <tbody>
-        <td>
-            <div class="form-group">
-                <select id="inputTest" class="form-control" asp-items @onchange="OnTestPickedChanged">
-                    <option selected>Choose test...</option>
-                    <option>...</option>
-                        @foreach (var test in TestsDedicatedList)
-                        {
-                        <option value="@test.TestId">@test.TestDescription</option>
-                        }
-                </select>
-            </div>
-        </td>
-        <td>
-            <div class="form-group">
-                <input type="text" class="form-control" id="formTestUnits" placeholder="@UserTicketTestVM.Test.TestUnits" readonly>
-            </div>
-        </td>
-        </tbody>
-    </table>
-</div>
-<br>
+@if (isAddNewTestButtonVisible == true)
+{
+    <button class="btn-secondary btn-sm" @onclick="() => AddNewTestToTicketTestsList()"> + </button>
+    <br>
+}
+else
+{
+    // no showing button with adding test
+}
 
-<!--
- Parameters request form
--->
-<div class="border-bottom border-white shadow rounded-lg col-md-6" style="background-color: #ededed">
-    <table class="table table-striped boarder table-hover">
-        <tr>
-            <th>Parameter</th>
-            <th>Value</th>
-            <th>Units</th>
-        </tr>
-        <tbody>
-            @if (UserTicketTestVM.TicketTestParameters == null)
-            {
-                <p><em>No parameters added.</em></p>
-            }
-            else
-            {
-                @foreach (var test in UserTicketTestVM.TicketTestParameters)
+@if (isAddTestTableVisible == false)
+{
+    // show nothing
+}
+else
+{
+    <div class="border-bottom border-white shadow rounded-lg col-md-6" style="backgoround-color: #ededed">
+        <table class="table table-striped boarder table-hover">
+            <tr>
+                <th>Test Description</th>
+                <th>Units</th>
+            </tr>
+            <tbody>
+            <td>
+                <div class="form-group">
+                    <select id="inputTest" class="form-control" asp-items @onchange="OnTestPickedChanged">
+                        <option selected>Choose test...</option>
+                        <option>...</option>
+                            @foreach (var test in TestsDedicatedList)
+                            {
+                            <option value="@test.TestId">@test.TestDescription</option>
+                            }
+                    </select>
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="formTestUnits" placeholder="@UserTicketTestVM.Test.TestUnits" readonly>
+                </div>
+            </td>
+            </tbody>
+        </table>
+    </div>
+    <br>
+
+    <!--
+     Parameters request form
+    -->
+    <div class="border-bottom border-white shadow rounded-lg col-md-6" style="background-color: #ededed">
+        <table class="table table-striped boarder table-hover">
+            <tr>
+                <th>Parameter</th>
+                <th>Value</th>
+                <th>Units</th>
+            </tr>
+            <tbody>
+                @if (UserTicketTestVM.TicketTestParameters == null)
                 {
-                    <tr>
-                        <td>@test.TestParameter.ParameterDescription</td>
-                        <td>
-                            <input type="text" class="form-control" id="formTestParameterValue" placeholder="Add parameter value" @bind="test.ParameterValue">
-                        </td>
-                        <td>@test.TestParameter.ParameterUnit</td>
-                    </tr>
+                    <p><em>No parameters added.</em></p>
                 }
-            }
-        </tbody>
-    </table>
-</div>
-<br>
-<div class="form-group">
-    <button class="btn btn-primary" @onclick="AddTestAndItsParametersToThisTicket">Add test and parameters</button>
-</div>
+                else
+                {
+                    @foreach (var test in UserTicketTestVM.TicketTestParameters)
+                    {
+                        <tr>
+                            <td>@test.TestParameter.ParameterDescription</td>
+                            <td>
+                                <input type="text" class="form-control" id="formTestParameterValue" placeholder="Add parameter value" @bind="test.ParameterValue">
+                            </td>
+                            <td>@test.TestParameter.ParameterUnit</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    <br>
+    <div class="form-group">
+        <button class="btn btn-primary" @onclick="AddTestAndItsParametersToThisTicket">Add test and parameters</button>
+    </div>
+}
 
 <!--
  List with picked tests
@@ -239,6 +261,10 @@
     List<Test> TestsDedicatedList = new List<Test>();
     List<TestParameter> TestParametersDedicatedList = new List<TestParameter>();
 
+    private int lastRecordPossitionCounter = 0;
+    private bool isAddTestTableVisible = false;
+    private bool isAddNewTestButtonVisible = true;
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -271,7 +297,7 @@
     private async Task LoadDedicatedTestParametersByTestId(int testId)
     {
         TestParametersDedicatedList = await http.GetFromJsonAsync<List<TestParameter>>($"https://localhost:7259/api/parametersbytestid/{testId}") ?? new List<TestParameter>();
-        UserTicketTestVM.TicketTestParameters = ConvertTestParametersDedicatedListToTicketTestList(TestParametersDedicatedList);
+        UserTicketVM.TicketTests[lastRecordPossitionCounter].TicketTestParameters = ConvertTestParametersDedicatedListToTicketTestList(TestParametersDedicatedList);
     }
 
     private async Task OnProductTypeChanged(ChangeEventArgs e)
@@ -305,12 +331,12 @@
 
     private async Task OnTestPickedChanged(ChangeEventArgs e)
     {
-
         if (int.TryParse(e.Value.ToString(), out int testId))
         {
-            // picked test chosen from list of dedicated tests by user
-            UserTicketTestVM.Test = TestsDedicatedList.Find(id => id.TestId == testId) ?? new Test();
-            UserTicketTestVM.TestId = testId;
+            UserTicketVM.TicketTests[lastRecordPossitionCounter].Test = TestsDedicatedList.Find(id => id.TestId == testId) ?? new Test();
+            UserTicketVM.TicketTests[lastRecordPossitionCounter].TestId = testId;
+            //UserTicketTestVM.Test = TestsDedicatedList.Find(id => id.TestId == testId) ?? new Test();
+            //UserTicketTestVM.TestId = testId;
             await LoadDedicatedTestParametersByTestId(testId);
         }
     }
@@ -326,6 +352,9 @@
 
     private void AddTestAndItsParametersToThisTicket()
     {
+        isAddTestTableVisible = false; // not showing table with test parameters
+        isAddNewTestButtonVisible = true; // showing button to add new test parameters
+
         // check if test exist if exist update test in list
         if (UserTicketVM.TicketTests.Any(id => id.Test.TestId == UserTicketTestVM.Test.TestId))
         {
@@ -384,5 +413,23 @@
             Navigation.NavigateTo("/", true);
         }
 
+    }
+
+    private int AddNewTestToTicketTestsList()
+    {
+        isAddTestTableVisible = true; // show table with test parameters
+        isAddNewTestButtonVisible = false; // not showing add new test button
+
+        // adding empty test to list and retrive possition in list
+        TicketTest emptyUserTicketTestVM = new TicketTest
+            {
+                TicketTestParameters = new List<TicketTestParameter>(),
+                Test = new()
+            };
+
+        UserTicketVM.TicketTests.Add(emptyUserTicketTestVM);
+        lastRecordPossitionCounter = UserTicketVM.TicketTests.Count;
+
+        return lastRecordPossitionCounter;
     }
 }
