@@ -8,6 +8,7 @@ using TicketManager.Services.TicketTestParameter_Services;
 
 namespace TicketManager.Api.Controllers
 {
+    [Authorize]
     [ApiController]
     public class TicketController : Controller
     {
