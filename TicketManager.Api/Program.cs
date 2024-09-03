@@ -33,12 +33,13 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddAuthorization();
 
-builder.Services.AddIdentityApiEndpoints<IdentityUser>()
-    .AddEntityFrameworkStores<TicketManagerDbContext>();
-
 // Register DbContext
 builder.Services.AddDbContext<TicketManagerDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("TicketManagerConnectionString")));
+
+// Active identity APIs (both cookies and tokens)
+builder.Services.AddIdentityApiEndpoints<IdentityUser>()
+    .AddEntityFrameworkStores<TicketManagerDbContext>();
 
 // Register seeder
 builder.Services.AddScoped<DbSeeder>();
@@ -75,9 +76,13 @@ await seeder.Seed();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+app.UseAuthentication();
 
 app.MapControllers();
 
 app.MapGroup("/identity").MapIdentityApi<IdentityUser>();
+
+// Map identity API
+app.MapIdentityApi<IdentityUser>();
 
 app.Run();
