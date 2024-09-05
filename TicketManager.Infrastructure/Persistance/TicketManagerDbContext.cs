@@ -28,13 +28,5 @@ namespace TicketManager.Infrastructure.Persistance
         public DbSet<TestParameter> TestParameters { get; set; }
         public DbSet<TicketTestParameter> TicketTestParameters { get; set; }
 
-
-        /* //in case of migration
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Server=localhost,1433;Initial Catalog=TicketManager;User ID=SA;Password=TicketManager!1;TrustServerCertificate=true");
-        }
-        */
-
     }
 }
