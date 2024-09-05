@@ -78,13 +78,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// Map identity API
-app.MapIdentityApi<IdentityUser>();
-
 // Seeding
 var scope = app.Services.CreateScope();
 var seeder = scope.ServiceProvider.GetRequiredService<DbSeeder>();
 await seeder.Seed();
+
+// Map identity API
+app.MapIdentityApi<IdentityUser>();
 
 app.UseHttpsRedirection();
 
