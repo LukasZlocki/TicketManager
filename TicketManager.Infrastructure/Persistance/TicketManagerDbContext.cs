@@ -1,16 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using TicketManager.Models.Models;
 
 namespace TicketManager.Infrastructure.Persistance
 {
-    public class TicketManagerDbContext : DbContext
+    public class TicketManagerDbContext : IdentityDbContext<IdentityUser>
     {
-        ///*
         public TicketManagerDbContext(DbContextOptions<TicketManagerDbContext> options) : base(options)
         {
 
         }
-        //*/
 
         public DbSet<Department> Departments { get; set; }
         public DbSet<FactoryLocation> FactoryLocations { get; set; }
@@ -27,14 +27,6 @@ namespace TicketManager.Infrastructure.Persistance
         public DbSet<TicketTest> TicketTests { get; set; }
         public DbSet<TestParameter> TestParameters { get; set; }
         public DbSet<TicketTestParameter> TicketTestParameters { get; set; }
-
-
-        /* //in case of migration
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("Server=localhost,1433;Initial Catalog=TicketManager;User ID=SA;Password=TicketManager!1;TrustServerCertificate=true");
-        }
-        */
 
     }
 }
