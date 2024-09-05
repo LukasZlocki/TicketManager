@@ -52,11 +52,6 @@
         </select>
     </div>
 
-
-    <!--
-     Basic product data form
-    -->
-
     <div class="form-group">
         <label for="inputProductFamily">Product family</label>
         <select id="inputProductFamily" class="form-control" asp-items @onchange="OnProductFamilyChanged">
@@ -158,13 +153,13 @@ else
                 <th>Units</th>
             </tr>
             <tbody>
-                @if (UserTicketVM.TicketTests[lastRecordPossitionCounter].TicketTestParameters == null)
+                @if (UserTicketTestVM.TicketTestParameters == null)
                 {
                     <p><em>No parameters added.</em></p>
                 }
                 else
                 {
-                    @foreach (var test in UserTicketVM.TicketTests[lastRecordPossitionCounter].TicketTestParameters)
+                    @foreach (var test in UserTicketTestVM.TicketTestParameters)
                     {
                         <tr>
                             <td>@test.TestParameter.ParameterDescription</td>
@@ -205,6 +200,7 @@ else
                 <p><em>No tests added.</em></p>
             }
             else
+            {
                 @foreach (var test in UserTicketVM.TicketTests)
                 {
                     <tr>
@@ -222,11 +218,12 @@ else
                             }
                         </td>
                         <td>
-                            <button class="btn-secondary btn-sm" @onclick="() => EditTestFromList(test.TestId)">Edit</button>
+                            <button class="btn-secondary btn-sm" @onclick="() => EditTestFromList(test)">Edit</button>
                             <button class="btn-danger btn-sm" @onclick="() => RemoveTestFromList(test.TestId)">Delete</button>
                         </td>
                     </tr>
                 }
+            }
         </tbody>
     </table>
     <div class="form-group">
@@ -261,10 +258,8 @@ else
     List<Test> TestsDedicatedList = new List<Test>();
     List<TestParameter> TestParametersDedicatedList = new List<TestParameter>();
 
-    private int lastRecordPossitionCounter = 0;
     private bool isAddTestTableVisible = false;
     private bool isAddNewTestButtonVisible = true;
-
 
     protected override async Task OnInitializedAsync()
     {
@@ -297,7 +292,7 @@ else
     private async Task LoadDedicatedTestParametersByTestId(int testId)
     {
         TestParametersDedicatedList = await http.GetFromJsonAsync<List<TestParameter>>($"https://localhost:7259/api/parametersbytestid/{testId}") ?? new List<TestParameter>();
-        UserTicketVM.TicketTests[lastRecordPossitionCounter].TicketTestParameters = ConvertTestParametersDedicatedListToTicketTestList(TestParametersDedicatedList);
+        UserTicketTestVM.TicketTestParameters = ConvertTestParametersDedicatedListToTicketTestList(TestParametersDedicatedList);
     }
 
     private async Task OnProductTypeChanged(ChangeEventArgs e)
@@ -331,12 +326,12 @@ else
 
     private async Task OnTestPickedChanged(ChangeEventArgs e)
     {
+
         if (int.TryParse(e.Value.ToString(), out int testId))
         {
-            UserTicketVM.TicketTests[lastRecordPossitionCounter].Test = TestsDedicatedList.Find(id => id.TestId == testId) ?? new Test();
-            UserTicketVM.TicketTests[lastRecordPossitionCounter].TestId = testId;
-            //UserTicketTestVM.Test = TestsDedicatedList.Find(id => id.TestId == testId) ?? new Test();
-            //UserTicketTestVM.TestId = testId;
+            // picked test chosen from list of dedicated tests by user
+            UserTicketTestVM.Test = TestsDedicatedList.Find(id => id.TestId == testId) ?? new Test();
+            UserTicketTestVM.TestId = testId;
             await LoadDedicatedTestParametersByTestId(testId);
         }
     }
@@ -355,17 +350,8 @@ else
         isAddTestTableVisible = false; // not showing table with test parameters
         isAddNewTestButtonVisible = true; // showing button to add new test parameters
 
-        // check if test exist if exist update test in list
-        if (UserTicketVM.TicketTests.Any(id => id.Test.TestId == UserTicketTestVM.Test.TestId))
-        {
-            int index = UserTicketVM.TicketTests.FindIndex(id => id.Test.TestId == UserTicketTestVM.Test.TestId);
-            UserTicketVM.TicketTests[index] = UserTicketTestVM;
-        }
-        // test does not exist. add new test to list
-        else
-        {
-            UserTicketVM.TicketTests.Add(UserTicketTestVM);
-        }
+        AddOrEditTestFromTestsList(UserTicketTestVM);
+
         // reseting user ticket to reset adding test and its parameters value
         UserTicketTestVM = new TicketTest
             {
@@ -400,9 +386,25 @@ else
         UserTicketVM.TicketTests?.RemoveAll(id => id?.Test?.TestId == testId);
     }
 
-    private void EditTestFromList(int testId)
+    private void AddOrEditTestFromTestsList(TicketTest test)
     {
-        UserTicketTestVM = UserTicketVM?.TicketTests?.Find(id => id?.TestId == testId);
+        int _index = UserTicketVM.TicketTests.FindIndex(t => t.Equals(test));
+
+        if (_index != -1)
+        {
+            UserTicketTestVM = UserTicketVM?.TicketTests?[_index]; // ticket found edition of ticket available
+        }
+        else
+        {
+            // ticket doeasn't exist new ticket is added to ticket test list
+            UserTicketVM.TicketTests.Add(UserTicketTestVM); // addding new test
+        }
+    }
+
+    private void EditTestFromList(TicketTest test)
+    {
+        isAddTestTableVisible = true;
+        AddOrEditTestFromTestsList(test);
     }
 
     private async Task CreateTicketRequest()
@@ -415,21 +417,10 @@ else
 
     }
 
-    private int AddNewTestToTicketTestsList()
+    private void AddNewTestToTicketTestsList()
     {
         isAddTestTableVisible = true; // show table with test parameters
         isAddNewTestButtonVisible = false; // not showing add new test button
-
-        // adding empty test to list and retrive possition in list
-        TicketTest emptyUserTicketTestVM = new TicketTest
-            {
-                TicketTestParameters = new List<TicketTestParameter>(),
-                Test = new()
-            };
-
-        UserTicketVM.TicketTests.Add(emptyUserTicketTestVM);
-        lastRecordPossitionCounter = UserTicketVM.TicketTests.Count - 1;
-
-        return lastRecordPossitionCounter;
     }
+
 }
