@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Authentication.Negotiate;
 using Microsoft.EntityFrameworkCore;
 using TicketManager.Infrastructure.Persistance;
 using TicketManager.Infrastructure.Seeders;
@@ -21,6 +20,8 @@ using TicketManager.Services.TicketTest_Services;
 using TicketManager.Services.Ticket_Services;
 using TicketManager.Services.TicketTestParameter_Services;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,18 +33,19 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options => {
     options.AddSecurityDefinition("oauth2", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
     {
-        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+        In = ParameterLocation.Header,
         Name = "Authorization",
-        Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey
+        Type = SecuritySchemeType.ApiKey
     });
+    options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
-
-// Add aouthorization
-builder.Services.AddAuthorization();
 
 // Register DbContext
 builder.Services.AddDbContext<TicketManagerDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("TicketManagerConnectionString")));
+
+// Add authorization
+builder.Services.AddAuthorization();
 
 // Active identity APIs (both cookies and tokens)
 builder.Services.AddIdentityApiEndpoints<IdentityUser>()
@@ -78,8 +80,6 @@ if (app.Environment.IsDevelopment())
 
 // Map identity API
 app.MapIdentityApi<IdentityUser>();
-
-//app.MapGroup("/identity").MapIdentityApi<IdentityUser>();
 
 // Seeding
 var scope = app.Services.CreateScope();

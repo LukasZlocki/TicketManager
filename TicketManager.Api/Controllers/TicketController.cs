@@ -8,7 +8,6 @@ using TicketManager.Services.TicketTestParameter_Services;
 
 namespace TicketManager.Api.Controllers
 {
-    [Authorize]
     [ApiController]
     public class TicketController : Controller
     {
@@ -24,6 +23,7 @@ namespace TicketManager.Api.Controllers
         }
 
         // GET
+        [Authorize]
         [HttpGet("api/ticketbyid/{id}")]
         public ActionResult GetTicketById(int id)
         {
