@@ -22,6 +22,10 @@ using TicketManager.Services.TicketTestParameter_Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNetCore.DataProtection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,6 +49,21 @@ builder.Services.AddDbContext<TicketManagerDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("TicketManagerConnectionString")));
 
 // Add authorization
+var secret = builder.Configuration.GetValue<string>("Jwt:Secret"); 
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = "doseHieu",
+        ValidAudience = "doseHieu",
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret))
+    };
+});
+
 builder.Services.AddAuthorization();
 
 // Active identity APIs (both cookies and tokens)
@@ -88,6 +107,7 @@ app.MapIdentityApi<IdentityUser>();
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
