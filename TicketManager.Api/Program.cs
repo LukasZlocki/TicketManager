@@ -49,7 +49,7 @@ builder.Services.AddDbContext<TicketManagerDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("TicketManagerConnectionString")));
 
 // Add authorization
-var secret = builder.Configuration.GetValue<string>("Jwt:Secret");
+var secret = builder.Configuration.GetValue<string>("Jwt:Secret"); 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters
