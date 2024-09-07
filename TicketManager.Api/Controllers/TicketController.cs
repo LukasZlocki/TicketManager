@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using TicketManager.Models.Models;
 using TicketManager.Services;
 using TicketManager.Services.Ticket_Services;
@@ -7,6 +8,7 @@ using TicketManager.Services.TicketTestParameter_Services;
 
 namespace TicketManager.Api.Controllers
 {
+    [ApiController]
     public class TicketController : Controller
     {
         private readonly ITicketService _ticketService;
@@ -21,6 +23,7 @@ namespace TicketManager.Api.Controllers
         }
 
         // GET
+        [Authorize]
         [HttpGet("api/ticketbyid/{id}")]
         public ActionResult GetTicketById(int id)
         {
