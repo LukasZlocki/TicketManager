@@ -1,0 +1,33 @@
+﻿@page "/loginlukasz"
+@using TicketManager.Models.Models
+@using TicketManager.Web.Components.Layout
+
+@inject HttpClient http
+
+@layout EmptyLayout
+
+
+<h3>Login</h3>
+
+<EditForm Model="loginModel" FormName="Login" OnValidSubmit="HandleLogin">
+    <DataAnnotationsValidator/>
+    <div class="form-group">
+        <label for="username">Username</label>
+        <InputText id="username" class="form-control" @bind-Value="loginModel.UserName" />
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <InputText id="password" class="form-control" type="password" @bind-Value="loginModel.Password" />
+    <button type="submit" class="btn btn-primary mt-3">Login</button>
+    </div>
+</EditForm>
+
+@code {
+    private LoginModel loginModel = new LoginModel();
+
+    private async Task HandleLogin()
+    {
+        //var res = await ApiClient.PostAsync<LoginResponseModel, LoginModel>("/api/login", loginModel);
+        //var response = await http.PostAsJsonAsync<LoginResponseModel, LoginModel>($"https://localhost:7259/api/login", loginModel);
+    }
+}
