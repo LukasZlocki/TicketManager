@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Authentication.Negotiate;
 using Microsoft.EntityFrameworkCore;
 using TicketManager.Infrastructure.Persistance;
 using TicketManager.Infrastructure.Seeders;
@@ -20,6 +19,9 @@ using TicketManager.Services.TestParameter_Services;
 using TicketManager.Services.TicketTest_Services;
 using TicketManager.Services.Ticket_Services;
 using TicketManager.Services.TicketTestParameter_Services;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,16 +30,26 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-/* temporary switch off authentication to read endpoints from frontend
-builder.Services.AddAuthentication(NegotiateDefaults.AuthenticationScheme)
-   .AddNegotiate();
-*/
+builder.Services.AddSwaggerGen(options => {
+    options.AddSecurityDefinition("oauth2", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey
+    });
+    options.OperationFilter<SecurityRequirementsOperationFilter>();
+});
 
 // Register DbContext
 builder.Services.AddDbContext<TicketManagerDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("TicketManagerConnectionString")));
+options.UseSqlServer(builder.Configuration.GetConnectionString("TicketManagerConnectionString")));
+
+// Add authorization
+builder.Services.AddAuthorization();
+
+// Active identity APIs (both cookies and tokens)
+builder.Services.AddIdentityApiEndpoints<IdentityUser>()
+    .AddEntityFrameworkStores<TicketManagerDbContext>();
 
 // Register seeder
 builder.Services.AddScoped<DbSeeder>();
@@ -57,14 +69,6 @@ builder.Services.AddTransient<ITestParameterServices, TestParameterServices>();
 builder.Services.AddTransient<ITicketService, TicketService>();
 builder.Services.AddTransient<ITicketTestParameterService, TicketTestParameterService>();
 
-/* temporary switch off authentication to read endpoints from frontend
-builder.Services.AddAuthorization(options =>
-{
-    // By default, all incoming requests will be authorized according to the default policy.
-    options.FallbackPolicy = options.DefaultPolicy;
-});
-*/
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -78,6 +82,9 @@ if (app.Environment.IsDevelopment())
 var scope = app.Services.CreateScope();
 var seeder = scope.ServiceProvider.GetRequiredService<DbSeeder>();
 await seeder.Seed();
+
+// Map identity API
+app.MapIdentityApi<IdentityUser>();
 
 app.UseHttpsRedirection();
 
