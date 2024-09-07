@@ -24,7 +24,7 @@ namespace TicketManager.Api.Controllers
         }
 
         private string GenerateJwtToken(string userName)
-        {
+        { 
             var claims = new[]
             {
                 new Claim(ClaimTypes.Name, userName),
