@@ -1,0 +1,30 @@
+﻿@page "/authtest"
+
+@using TicketManager.Models.Models
+
+@inject HttpClient http
+
+<h3>AuthTest</h3>
+
+<!--
+ Table with base data
+-->
+<form>
+    <div class="form-group">
+        <label for="lblproduct">
+            Product:
+            @TicketVM.RequestorEmail
+            @TicketVM.DepartmentId
+        </label>
+    </div>
+</form>
+
+@code {
+    private Ticket TicketVM = new Ticket();
+
+    protected override async Task OnInitializedAsync()
+    {
+        TicketVM = await http.GetFromJsonAsync<Ticket>("https://localhost:7259/api/ticketbyid/" + 1) ?? new Ticket();
+    }
+
+}
